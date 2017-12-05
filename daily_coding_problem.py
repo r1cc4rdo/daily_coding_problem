@@ -94,29 +94,19 @@ def coding_problem_4(arr):
     2
     >>> coding_problem_4([1, 2, 0])
     3
-    >>> coding_problem_4([1, 2, 1, 0])
+    >>> coding_problem_4([4, 1, 2, 2, 2, 1, 0])
     3
     """
     arr = np.array(arr)
-    arr_min = max(np.amin(arr), 1)
-    arr = np.clip(arr, arr_min, arr_min + len(arr) - 1) - arr_min  # clip between 0 and len-1 (bounds if no gaps)
-
-    def recursive_swap(a, current_idx):
-        current_val = next_idx = a[current_idx]
-        if current_val < current_idx:
-            return False
-        if current_idx == current_val:
-            return True
-
-        a[current_idx], a[next_idx] = a[next_idx], a[current_idx]
-        return recursive_swap(a, current_idx)
-
-    cnt = 0
-    for cnt in xrange(len(arr)):
-        if not recursive_swap(arr, cnt):
+    arr = arr[arr > 0]
+    while True:
+        prev_arr, arr = arr, arr[arr <= len(arr)]
+        if np.array_equal(arr, prev_arr):
             break
 
-    return cnt + arr_min
+    arr[arr - 1] = arr  # magic in-place bucket sort
+    idxs = np.argwhere(arr != range(1, 1 + len(arr))).flatten()
+    return 1 + (arr[-1] if len(idxs) == 0 else idxs[0])
 
 
 if __name__ == '__main__':
