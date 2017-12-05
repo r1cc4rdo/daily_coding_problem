@@ -46,6 +46,80 @@ def coding_problem_2(l):
     return list(result)
 
 
+def coding_problem_3():
+    """
+    Given the root to a binary tree, implement serialize(root), which serializes the tree
+    into a string, and deserialize(s), which deserializes the string back into the tree.
+    Example:
+
+    >>> coding_problem_3()
+    True
+    """
+    class BinaryNode(object):
+
+        def __init__(self, val, lc=None, rc=None):
+            self.val = val
+            self.lc = lc
+            self.rc = rc
+
+        def serialize(self, queue=None):
+            queue = [] if queue is None else queue
+            queue.append(self.val)
+            if self.val is not None:
+                self.lc.serialize(queue)
+                self.rc.serialize(queue)
+            return queue
+
+        @classmethod
+        def deserialize(cls, queue):
+            val, lc, rc = queue.popleft(), None, None
+            if val is not None:
+                lc = cls.deserialize(queue)
+                rc = cls.deserialize(queue)
+            return BinaryNode(val, lc, rc)
+
+    serialized_tree = [3, 2, 1, None, None, None, 4, 5, None, None, 6, None, None]
+    de_serialized = BinaryNode.deserialize(deque(serialized_tree))
+    re_serialized = de_serialized.serialize()
+    return serialized_tree == re_serialized
+
+
+def coding_problem_4(arr):
+    """
+    Given an array of integers, find the first missing positive integer in linear time and constant space.
+    You can modify the input array in-place.
+    Example:
+
+    >>> coding_problem_4([3, 4, -1, 1])
+    2
+    >>> coding_problem_4([1, 2, 0])
+    3
+    >>> coding_problem_4([1, 2, 1, 0])
+    3
+    """
+    arr = np.array(arr)
+    arr_min = max(np.amin(arr), 1)
+    arr = np.clip(arr, arr_min, arr_min + len(arr) - 1) - arr_min  # clip between 0 and len-1 (bounds if no gaps)
+
+    def recursive_swap(a, current_idx):
+        current_val = next_idx = a[current_idx]
+        if current_val < current_idx:
+            return False
+        if current_idx == current_val:
+            return True
+
+        a[current_idx], a[next_idx] = a[next_idx], a[current_idx]
+        return recursive_swap(a, current_idx)
+
+    cnt = 0
+    for cnt in xrange(len(arr)):
+        if not recursive_swap(arr, cnt):
+            break
+
+    return cnt + arr_min
+
+
 if __name__ == '__main__':
+
     import doctest
     doctest.testmod(verbose=True)
