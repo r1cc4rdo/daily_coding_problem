@@ -3,6 +3,7 @@ import numpy as np
 import operator
 import sys
 import os
+import re
 
 
 def coding_problem_1(stack):
@@ -332,6 +333,69 @@ def pn_practice_code_test_b():
 
     print '! {}'.format(''.join(solution))
     sys.stdout.flush()
+
+
+def lc_basic_calculator(s):
+    """
+    From https://leetcode.com/problems/basic-calculator
+    Examples:
+
+    >>> lc_basic_calculator('1 + 1')
+    2
+    >>> lc_basic_calculator(' 2-1 + 2 ')
+    3
+    >>> lc_basic_calculator('(1+(4+5+2)-3)+(6+8)')
+    23
+    >>> lc_basic_calculator('2-(5-6)')
+    3
+    """
+    class Solution(object):
+        def calculate(self, s):
+            s = s.replace(' ', '')  # no whitespace
+            while '(' in s:  # recursively evaluate sub expressions
+                tokens_before = s.split('(')
+                token_after = tokens_before[-1].split(')')
+                value = self.calculate(token_after[0])
+                s = '('.join(tokens_before[:-1]) + str(value) + ')'.join(token_after[1:])
+                s = s.replace('--', '+')
+
+            addends = re.split('([+-]?\d+)', s)[1::2]
+            return sum(map(int, addends))
+
+    return Solution().calculate(s)
+
+
+def lc_valid_number(x):
+    """
+    From https://leetcode.com/problems/valid-number
+
+    Validate if a given string is numeric.
+    Note: It is intended for the problem statement to be ambiguous.
+    You should gather all requirements up front before implementing one.
+    Examples:
+
+    >>> lc_valid_number("0")
+    True
+    >>> lc_valid_number(" 0.1 ")
+    True
+    >>> lc_valid_number("abc")
+    False
+    >>> lc_valid_number("1 a")
+    False
+    >>> lc_valid_number("2e10")
+    True
+    """
+    class Solution(object):
+        @staticmethod
+        def is_number(s):
+            s = s.strip()
+            try:
+                _ = float(s)
+                return True
+            except ValueError:
+                return False
+
+    return Solution.is_number(x)
 
 
 if __name__ == '__main__':
