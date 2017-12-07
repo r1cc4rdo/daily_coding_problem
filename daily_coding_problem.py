@@ -1,5 +1,8 @@
 from collections import deque
 import numpy as np
+import operator
+import sys
+import os
 
 
 def coding_problem_1(stack):
@@ -142,7 +145,8 @@ def coding_problem_6():
     True
 
     Note: python does not have actual pointers (id() exists but it is not an actual pointer in all implementations).
-    For this reason, we use a python list to simulate memory. Indexes are the addresses in memory.
+    For this reason, we use a python list to simulate memory. Indexes are the addresses in memory. This has the
+    unfortunate consequence that the travel logic needs to reside in the List class rather than the Node one.
     """
     class XORLinkedListNode(object):
 
@@ -161,12 +165,12 @@ def coding_problem_6():
         def __init__(self):
             self.memory = [XORLinkedListNode(None, -1, -1)]
 
-        def add(self, val):
-            current_node_index = 0
-            previous_node_index = -1
-            current_node = self.memory[current_node_index]
+        def head(self):
+            return 0, -1, self.memory[0]  # head node index, prev node index, head node
 
-            while True:  # walk down the list
+        def add(self, val):
+            current_node_index, previous_node_index, current_node = self.head()
+            while True:  # walk down the list until we find the end
                 next_node_index = current_node.next_node(previous_node_index)
                 if next_node_index == -1:  # we reached the end on the list
                     break
@@ -178,9 +182,7 @@ def coding_problem_6():
             self.memory.append(XORLinkedListNode(val, current_node_index, -1))
 
         def get(self, index):
-            current_index = 0
-            previous_index = -1
-            current_node = self.memory[0]
+            current_index, previous_index, current_node = self.head()
             for cnt in xrange(index + 1):
                 previous_index, current_index = current_index, current_node.next_node(previous_index)
                 current_node = self.memory[current_index]
@@ -191,6 +193,145 @@ def coding_problem_6():
         l.add(cnt)
 
     return l.get(2) == 2
+
+
+def coding_problem_7(s):
+    """
+    Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
+    Example:
+
+    The message '111' gives 3, since it could be decoded as 'aaa', 'ka', and 'ak'.
+    >>> coding_problem_7('111')
+    3
+
+    The message '2626' gives 4, since it could be decoded as 'zz', 'zbf', 'bfz' and 'bfbf'.
+    >>> coding_problem_7('2626')
+    4
+    """
+    symbols = map(str, range(1, 27))
+    if not s:
+        return 1
+
+    matches = filter(lambda symbol: s.startswith(symbol), symbols)
+    encodings = [coding_problem_7(s[len(m):]) for m in matches]
+    return sum(encodings)
+
+
+def pn_practice_code_test_a(input_stream=sys.stdin):
+    """
+    You are given 3 integers a , b , c and a string s. Output result of a+b+c and string s with a half-width break.
+    Input will be given in the following format from Standard Input:
+
+    a
+    b c
+    s
+
+    All integers will be bounded 1 <= a, b, c <= 1000. There will be a half-width break between b and c.
+    If we define the length of string s as |s| , it is guaranteed 1 <= |s| <= 100.
+    Output the result of a+b+c and string s with a half-width break in one line.
+    Make sure to insert a line break at the end of the output.
+    Example:
+
+    >>> import cStringIO as StringIO
+    >>> pn_practice_code_test_a(StringIO.StringIO(os.linesep.join(['1', '2 3', 'ciao'])))
+    '6 ciao'
+    """
+    a = input_stream.readline()
+    b, c = input_stream.readline().split()
+    s = input_stream.readline().strip()
+    abc = sum(map(int, [a, b, c]))
+    return '{} {}'.format(abc, s)
+
+
+def pn_practice_code_test_b():
+    """
+    There are N balls labeled with the first N uppercase letters. The balls have pairwise distinct weights.
+    You are allowed to ask at most Q queries. In each query, you can compare the weights of two balls.
+    Sort the balls in the ascending order of their weights.
+
+    This is an interactive program.
+    First, you are given N and Q from Standard Input in the following format:
+
+        N Q
+
+    Then, you start asking queries (at most Q times). Each query must be printed to stdout in the following format:
+
+        ? c1 c2
+
+    Here each of c1 and c2 must be one of the first N uppercase letters, and c1 and c2 must be distinct.
+    Then, you are given the answer to the query from Standard Input in the following format:
+
+        ans
+
+    Here ans is either < or >. When ans is <, the ball c2 is heavier than the ball c1, and otherwise the ball c1
+    is heavier than the ball c2. Finally, you must print the answer to Standard Output in the following format:
+
+        ! ans
+
+    Here ans must be a string of length N, and it must contain each of the first N uppercase letters once.
+    It must represent the weights of the balls in the ascending order.
+    """
+    def insert(ball, sol):
+        """
+        Implements a single round of insertion sort with binary search.
+        """
+        if not sol:
+            return [ball]
+
+        half = len(sol) / 2
+        pre, mid, post = sol[:half], sol[half], sol[half + 1:]
+
+        print '? {} {}'.format(ball, mid)
+        sys.stdout.flush()
+        answer = sys.stdin.readline().strip()
+
+        if answer == '<':
+            return insert(ball, pre) + [mid] + post
+        else:
+            return pre + [mid] + insert(ball, post)
+
+    def solve_for_5_7():
+        """
+        Optimal solution of 5 elements and 7 questions.
+        See https://cs.stackexchange.com/questions/44981/least-number-of-comparisons-needed-to-sort-order-5-elements
+        """
+        print '? A B'
+        sys.stdout.flush()
+        AB = ['A', 'B'] if sys.stdin.readline().strip() == '<' else ['B', 'A']
+
+        print '? C D'
+        sys.stdout.flush()
+        CD = ['C', 'D'] if sys.stdin.readline().strip() == '<' else ['D', 'C']
+
+        print '? {} {}'.format(AB[1], CD[1])
+        sys.stdout.flush()
+        if sys.stdin.readline().strip() == '<':
+
+            triple = AB + [CD[1]]
+            leftover = CD[0]
+
+        else:
+
+            triple = CD + [AB[1]]
+            leftover = AB[0]
+
+        sol4 = insert('E', triple)
+        return insert(leftover, sol4[:3]) + [sol4[-1]]
+
+    alphabet, budget = map(int, sys.stdin.readline().split())
+    if alphabet == 5 and budget == 7:
+
+        solution = solve_for_5_7()
+
+    else:
+
+        balls = [chr(0x41 + val) for val in range(alphabet)]
+        solution = [balls.pop()]
+        while balls:
+            solution = insert(balls.pop(), solution)
+
+    print '! {}'.format(''.join(solution))
+    sys.stdout.flush()
 
 
 if __name__ == '__main__':
