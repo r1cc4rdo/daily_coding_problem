@@ -398,6 +398,53 @@ def lc_valid_number(x):
     return Solution.is_number(x)
 
 
+def lc_candies(ratings_list):
+    """
+    From: https://leetcode.com/problems/candy
+
+    There are N children standing in a line. Each child is assigned a rating value.
+    You are giving candies to these children subjected to the following requirements:
+
+    - Each child must have at least one candy.
+    - Children with a higher rating get more candies than their neighbors.
+
+    What is the minimum candies you must give?
+    Examples:
+
+    >>> lc_candies([0])
+    1
+    >>> lc_candies([1, 3, 7, 2, 1, 3, 5, 2, 4])
+    17
+    """
+
+    class Solution(object):
+
+        @staticmethod
+        def compute_gradients(arr):
+
+            padded_arr = np.concatenate((arr[:1], arr, arr[-1:]))
+            gradient_left = (padded_arr[1:-1] > padded_arr[:-2]).astype(arr.dtype)
+            gradient_right = (padded_arr[1:-1] > padded_arr[2:]).astype(arr.dtype)
+            return gradient_left, gradient_right
+
+        def candy(self, ratings_list):
+
+            ratings = np.array(ratings_list)
+            candies = np.ones_like(ratings)
+            rl, rr = self.compute_gradients(ratings)
+            while True:
+
+                cl, cr = self.compute_gradients(candies)
+                update = np.maximum(rl - cl, rr - cr)
+                if (update == 0).all():
+                    break
+                candies += update
+
+            return candies.sum()
+
+    return Solution().candy(ratings_list)
+
+
 if __name__ == '__main__':
 
     import doctest
