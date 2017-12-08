@@ -1,6 +1,5 @@
 from collections import deque
 import numpy as np
-import operator
 import sys
 import os
 import re
@@ -218,231 +217,26 @@ def coding_problem_7(s):
     return sum(encodings)
 
 
-def pn_practice_code_test_a(input_stream=sys.stdin):
+def coding_problem_8(btree):
     """
-    You are given 3 integers a , b , c and a string s. Output result of a+b+c and string s with a half-width break.
-    Input will be given in the following format from Standard Input:
-
-    a
-    b c
-    s
-
-    All integers will be bounded 1 <= a, b, c <= 1000. There will be a half-width break between b and c.
-    If we define the length of string s as |s| , it is guaranteed 1 <= |s| <= 100.
-    Output the result of a+b+c and string s with a half-width break in one line.
-    Make sure to insert a line break at the end of the output.
+    A unival tree (which stands for "universal value") is a tree where all nodes have the same value.
+    Given the root to a binary tree, count the number of unival subtrees.
     Example:
 
-    >>> import cStringIO as StringIO
-    >>> pn_practice_code_test_a(StringIO.StringIO(os.linesep.join(['1', '2 3', 'ciao'])))
-    '6 ciao'
+    >>> btree = (0, (0, (0, None, None), (0, (0, None, None), (0, None, None))), (1, None, None))
+    >>> coding_problem_8(btree)[0]
+    6
     """
-    a = input_stream.readline()
-    b, c = input_stream.readline().split()
-    s = input_stream.readline().strip()
-    abc = sum(map(int, [a, b, c]))
-    return '{} {}'.format(abc, s)
+    val, ln, rn = btree
+    if ln is None and rn is None:  # leaf case
+        return 1, True, val
 
+    lcount, is_uni_l, lval = coding_problem_8(ln)
+    rcount, is_uni_r, rval = coding_problem_8(rn)
 
-def pn_practice_code_test_b():
-    """
-    There are N balls labeled with the first N uppercase letters. The balls have pairwise distinct weights.
-    You are allowed to ask at most Q queries. In each query, you can compare the weights of two balls.
-    Sort the balls in the ascending order of their weights.
-
-    This is an interactive program.
-    First, you are given N and Q from Standard Input in the following format:
-
-        N Q
-
-    Then, you start asking queries (at most Q times). Each query must be printed to stdout in the following format:
-
-        ? c1 c2
-
-    Here each of c1 and c2 must be one of the first N uppercase letters, and c1 and c2 must be distinct.
-    Then, you are given the answer to the query from Standard Input in the following format:
-
-        ans
-
-    Here ans is either < or >. When ans is <, the ball c2 is heavier than the ball c1, and otherwise the ball c1
-    is heavier than the ball c2. Finally, you must print the answer to Standard Output in the following format:
-
-        ! ans
-
-    Here ans must be a string of length N, and it must contain each of the first N uppercase letters once.
-    It must represent the weights of the balls in the ascending order.
-    """
-    def insert(ball, sol):
-        """
-        Implements a single round of insertion sort with binary search.
-        """
-        if not sol:
-            return [ball]
-
-        half = len(sol) / 2
-        pre, mid, post = sol[:half], sol[half], sol[half + 1:]
-
-        print '? {} {}'.format(ball, mid)
-        sys.stdout.flush()
-        answer = sys.stdin.readline().strip()
-
-        if answer == '<':
-            return insert(ball, pre) + [mid] + post
-        else:
-            return pre + [mid] + insert(ball, post)
-
-    def solve_for_5_7():
-        """
-        Optimal solution of 5 elements and 7 questions.
-        See https://cs.stackexchange.com/questions/44981/least-number-of-comparisons-needed-to-sort-order-5-elements
-        """
-        print '? A B'
-        sys.stdout.flush()
-        AB = ['A', 'B'] if sys.stdin.readline().strip() == '<' else ['B', 'A']
-
-        print '? C D'
-        sys.stdout.flush()
-        CD = ['C', 'D'] if sys.stdin.readline().strip() == '<' else ['D', 'C']
-
-        print '? {} {}'.format(AB[1], CD[1])
-        sys.stdout.flush()
-        if sys.stdin.readline().strip() == '<':
-
-            triple = AB + [CD[1]]
-            leftover = CD[0]
-
-        else:
-
-            triple = CD + [AB[1]]
-            leftover = AB[0]
-
-        sol4 = insert('E', triple)
-        return insert(leftover, sol4[:3]) + [sol4[-1]]
-
-    alphabet, budget = map(int, sys.stdin.readline().split())
-    if alphabet == 5 and budget == 7:
-
-        solution = solve_for_5_7()
-
-    else:
-
-        balls = [chr(0x41 + val) for val in range(alphabet)]
-        solution = [balls.pop()]
-        while balls:
-            solution = insert(balls.pop(), solution)
-
-    print '! {}'.format(''.join(solution))
-    sys.stdout.flush()
-
-
-def lc_basic_calculator(s):
-    """
-    From https://leetcode.com/problems/basic-calculator
-    Examples:
-
-    >>> lc_basic_calculator('1 + 1')
-    2
-    >>> lc_basic_calculator(' 2-1 + 2 ')
-    3
-    >>> lc_basic_calculator('(1+(4+5+2)-3)+(6+8)')
-    23
-    >>> lc_basic_calculator('2-(5-6)')
-    3
-    """
-    class Solution(object):
-        def calculate(self, s):
-            s = s.replace(' ', '')  # no whitespace
-            while '(' in s:  # recursively evaluate sub expressions
-                tokens_before = s.split('(')
-                token_after = tokens_before[-1].split(')')
-                value = self.calculate(token_after[0])
-                s = '('.join(tokens_before[:-1]) + str(value) + ')'.join(token_after[1:])
-                s = s.replace('--', '+')
-
-            addends = re.split('([+-]?\d+)', s)[1::2]
-            return sum(map(int, addends))
-
-    return Solution().calculate(s)
-
-
-def lc_valid_number(x):
-    """
-    From https://leetcode.com/problems/valid-number
-
-    Validate if a given string is numeric.
-    Note: It is intended for the problem statement to be ambiguous.
-    You should gather all requirements up front before implementing one.
-    Examples:
-
-    >>> lc_valid_number("0")
-    True
-    >>> lc_valid_number(" 0.1 ")
-    True
-    >>> lc_valid_number("abc")
-    False
-    >>> lc_valid_number("1 a")
-    False
-    >>> lc_valid_number("2e10")
-    True
-    """
-    class Solution(object):
-        @staticmethod
-        def is_number(s):
-            s = s.strip()
-            try:
-                _ = float(s)
-                return True
-            except ValueError:
-                return False
-
-    return Solution.is_number(x)
-
-
-def lc_candies(ratings_list):
-    """
-    From: https://leetcode.com/problems/candy
-
-    There are N children standing in a line. Each child is assigned a rating value.
-    You are giving candies to these children subjected to the following requirements:
-
-    - Each child must have at least one candy.
-    - Children with a higher rating get more candies than their neighbors.
-
-    What is the minimum candies you must give?
-    Examples:
-
-    >>> lc_candies([0])
-    1
-    >>> lc_candies([1, 3, 7, 2, 1, 3, 5, 2, 4])
-    17
-    """
-
-    class Solution(object):
-
-        @staticmethod
-        def compute_gradients(arr):
-
-            padded_arr = np.concatenate((arr[:1], arr, arr[-1:]))
-            gradient_left = (padded_arr[1:-1] > padded_arr[:-2]).astype(arr.dtype)
-            gradient_right = (padded_arr[1:-1] > padded_arr[2:]).astype(arr.dtype)
-            return gradient_left, gradient_right
-
-        def candy(self, ratings_list):
-
-            ratings = np.array(ratings_list)
-            candies = np.ones_like(ratings)
-            rl, rr = self.compute_gradients(ratings)
-            while True:
-
-                cl, cr = self.compute_gradients(candies)
-                update = np.maximum(rl - cl, rr - cr)
-                if (update == 0).all():
-                    break
-                candies += update
-
-            return candies.sum()
-
-    return Solution().candy(ratings_list)
+    is_unival = is_uni_l and is_uni_r and val == lval and val == rval
+    count = lcount + rcount + is_unival
+    return count, is_unival, val
 
 
 if __name__ == '__main__':
