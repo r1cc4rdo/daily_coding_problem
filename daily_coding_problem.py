@@ -239,7 +239,7 @@ def coding_problem_8(btree):
     return count, is_unival, val
 
 
-def coding_problem_8(arr):
+def coding_problem_9(arr):
     """
     Given a list of integers, write a function that returns the largest sum of non-adjacent numbers.
     Examples:
