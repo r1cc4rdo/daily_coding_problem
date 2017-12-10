@@ -239,6 +239,27 @@ def coding_problem_8(btree):
     return count, is_unival, val
 
 
+def coding_problem_8(arr):
+    """
+    Given a list of integers, write a function that returns the largest sum of non-adjacent numbers.
+    Examples:
+
+    >>> coding_problem_8([2, 4, 6, 8])
+    12
+    >>> coding_problem_8([5, 1, 1, 5])
+    10
+    """
+    assert(len(arr) >= 3)
+
+    max_sum = 0
+    for cnt in xrange(0, len(arr)):
+
+        sum = arr[cnt] + max(arr[:cnt-1] + arr[cnt+2:])
+        max_sum = max(max_sum, sum)
+
+    return max_sum
+
+
 if __name__ == '__main__':
 
     import doctest
