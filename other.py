@@ -119,6 +119,88 @@ def pn_practice_code_test_b():
     sys.stdout.flush()
 
 
+def pn_edit_distance(input_stream=sys.stdin):
+    """
+    Verify if the edit distance between two strings is lower or equal to one.
+    Edit distance considers character insertion, deletion and substitution as basic operations.
+    Output 'YES' is the two provided strings have an edit distance lower than 1, 'NO' otherwise.
+    Examples:
+
+    >>> import cStringIO as StringIO
+    >>> pn_edit_distance(StringIO.StringIO(os.linesep.join(['abcde', 'abcfe'])))
+    YES
+    >>> pn_edit_distance(StringIO.StringIO(os.linesep.join(['abcde', 'abde'])))
+    YES
+    >>> pn_edit_distance(StringIO.StringIO(os.linesep.join(['abcdef', 'abcde'])))
+    YES
+    >>> pn_edit_distance(StringIO.StringIO(os.linesep.join(['abcde', 'abdce'])))
+    NO
+    """
+    S = input_stream.readline().strip()
+    T = input_stream.readline().strip()
+
+    if len(S) < len(T):
+        S, T = T, S
+
+    if S == T:
+
+        print 'YES'
+
+    elif len(S) - len(T) > 1:
+
+        print 'NO'
+
+    else:
+
+        while T:  # remove equal prefix
+
+            if S[0] == T[0]:
+
+                S = S[1:]
+                T = T[1:]
+
+            else:
+
+                break
+
+        print 'YES' if len(T) <= 1 or S[1:] == T or S[1:] == T[1:] else 'NO'
+
+
+def pn_strings_wo_repetitions(input_stream=sys.stdin):
+    """
+    Given a list of characters, return the number of string than can be composed from all of them without any two
+    adjacent characters being equal.
+
+    >>> import cStringIO as StringIO
+    >>> pn_strings_wo_repetitions(StringIO.StringIO('aabb' + os.linesep))
+    2
+    >>> pn_strings_wo_repetitions(StringIO.StringIO('aabbbccd' + os.linesep))
+    384
+    """
+
+    S = input_stream.readline().strip()
+
+    def add(prefix, characters):
+
+        if not characters:
+            return 1  # leaf case
+
+        last_char = prefix[-1] if prefix else None
+        valid_characters = [c for c in characters if c != last_char]
+        if not valid_characters:
+            return 0  # infeasible
+
+        count = 0
+        for c in set(valid_characters):
+            rest_of_string = list(characters)  # copy
+            rest_of_string.remove(c)
+            count += add(prefix + c, rest_of_string)
+
+        return count
+
+    return  add('', list(S))
+
+
 if __name__ == '__main__':
 
     import doctest
