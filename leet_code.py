@@ -1,7 +1,7 @@
 import re
 
 
-def lc_basic_calculator(s):
+def lc_basic_calculator(string):
     """
     From https://leetcode.com/problems/basic-calculator
     Examples:
@@ -28,7 +28,7 @@ def lc_basic_calculator(s):
             addends = re.split('([+-]?\d+)', s)[1::2]
             return sum(map(int, addends))
 
-    return Solution().calculate(s)
+    return Solution().calculate(string)
 
 
 def lc_valid_number(x):
@@ -87,7 +87,8 @@ def lc_candies(ratings_list):
 
     class Solution(object):
 
-        def candy(self, ratings):
+        @staticmethod
+        def candy(ratings):
 
             candies = [1] * len(ratings)
             for cnt in range(1, len(ratings)):
@@ -100,7 +101,7 @@ def lc_candies(ratings_list):
 
             return sum(candies)
 
-    return Solution().candy(ratings_list)
+    return Solution.candy(ratings_list)
 
 
 def lc_non_decreasing_array(arr):
@@ -118,7 +119,8 @@ def lc_non_decreasing_array(arr):
     """
     class Solution(object):
 
-        def check_possibility(self, nums):
+        @staticmethod
+        def check_possibility(nums):
 
             idx = len(nums)
             for cnt in xrange(0, len(nums) - 1):
@@ -132,7 +134,7 @@ def lc_non_decreasing_array(arr):
 
             return idx <= 0 or idx >= len(nums) - 2 or nums[idx - 1] <= nums[idx + 1] or nums[idx] <= nums[idx + 2]
 
-    return Solution().check_possibility(arr)
+    return Solution.check_possibility(arr)
 
 
 def lc_reverse_integer(n):
@@ -151,7 +153,8 @@ def lc_reverse_integer(n):
     """
     class Solution(object):
 
-        def reverse(self, x):
+        @staticmethod
+        def reverse(x):
 
             neg = x < 0
             if neg:
@@ -167,7 +170,7 @@ def lc_reverse_integer(n):
 
             return -result if neg else result
 
-    return Solution().reverse(n)
+    return Solution.reverse(n)
 
 
 def lc_median_sorted_arrays(a, b):  # work in progress
@@ -210,7 +213,7 @@ def lc_median_sorted_arrays(a, b):  # work in progress
     return a[idx_a]
 
 
-def lc_count_primes(n):  # work in progress
+def lc_count_primes(num):  # work in progress
     """
     From https://leetcode.com/problems/count-primes
 
@@ -253,7 +256,139 @@ def lc_count_primes(n):  # work in progress
 
             return len(primes)
 
-    return Solution().count_primes(n)
+    return Solution().count_primes(num)
+
+
+def lc_virus(playing_field):
+    """
+    From https://leetcode.com/contest/weekly-contest-63/problems/contain-virus/
+
+    A virus is spreading rapidly, and your task is to quarantine the infected area by installing walls.
+    The world is modeled as a 2-D array of cells, where 0 represents uninfected cells, and 1 represents cells
+    contaminated with the virus. A wall (and only one wall) can be installed between any two 4-directionally adjacent
+    cells, on the shared boundary. Every night, the virus spreads to all neighboring cells in all four directions
+    unless blocked by a wall. Resources are limited. Each day, you can install walls around only one region -- the
+    affected area (continuous block of infected cells) that threatens the most uninfected cells the following night.
+    There will never be a tie. Can you save the day? If so, what is the number of walls required? If not, and the world
+    becomes fully infected, return the number of walls used.
+    Examples:
+
+    >>> lc_virus([[0,1,0,0,0,0,0,1],
+    ...           [0,1,0,0,0,0,0,1],
+    ...           [0,0,0,0,0,0,0,1],
+    ...           [0,0,0,0,0,0,0,0]])
+    10
+    >>> lc_virus([[1,1,1],
+    ...           [1,0,1],
+    ...           [1,1,1]]
+    4
+    >>> lc_virus([[1,1,1,0,0,0,0,0,0],
+    ...           [1,0,1,0,1,1,1,1,1],
+    ...           [1,1,1,0,0,0,0,0,0]])
+    13
+    """
+    class Solution(object):
+
+        def get_coords(self, grid, test_fun):
+
+            result = []
+            for row_index in xrange(len(grid)):
+                for col_index in xrange(len(grid[row_index])):
+                    if test_fun(grid[row_index][col_index]):
+                        result.append((row_index, col_index))
+
+            return result
+
+        def neighbours(self, coord_list, potential_neighbours, dedupe=True):
+
+            result = []
+            for i in xrange(len(coord_list)):
+                for j in xrange(len(potential_neighbours)):
+                    diff = [abs(x0 - x1) for x0, x1 in zip(coord_list[i], potential_neighbours[j])]
+                    if 0 in diff and 1 in diff:
+                        result.append(potential_neighbours[j])
+
+            return list(set(result) - set(coord_list)) if dedupe else result
+
+        def connected_components(self, coords):
+
+            ccs = []
+            while True:
+
+                cell, prev_cell = [coords.pop()], None
+                while cell != prev_cell:
+                    prev_cell = list(cell)  # copy
+                    cell = cell + self.neighbours(cell, coords)
+
+                ccs.append(cell)
+                coords = list(set(coords) - set(cell))
+                if not coords:
+                    break
+
+            return ccs
+
+        def label_virus_zones(self, grid):
+
+            virus = self.get_coords(grid, lambda x: x > 0)
+            if virus:
+                for idx, cc in enumerate(self.connected_components(virus)):
+                    for coord in cc:
+                        grid[coord[0]][coord[1]] = idx + 1
+
+            return grid
+
+        def contain_virus(self, grid):
+            """
+            :type grid: List[List[int]]
+            :rtype: int
+            """
+            from itertools import combinations
+
+            walls = 0
+            while True:
+
+                grid = self.label_virus_zones(grid)
+                virus_zones = list(set([val for row in grid for val in row if val > 0]))
+
+                virus_spread = []
+                uncontaminated = self.get_coords(grid, lambda x: x == 0)
+
+                for zone in virus_zones:
+                    zone_coords = self.get_coords(grid, lambda x: x == zone)
+                    virus_spread.append(self.neighbours(zone_coords, uncontaminated))
+
+                lost_anyway = []
+                for spread1, spread2 in combinations(virus_spread, 2):
+                    in_common = set(spread1).intersection(set(spread2))
+                    lost_anyway.extend(in_common)
+
+                lost_anyway = set(lost_anyway)
+                for index in xrange(len(virus_spread)):
+                    virus_spread[index] = list(set(virus_spread[index]) - lost_anyway)
+
+                impacts = [len(spread) for spread in virus_spread]
+                if not impacts:
+                        break  # done here
+
+                biggest_impact = max(impacts)
+                zone_to_contain_id = virus_zones[impacts.index(biggest_impact)]
+                zone_to_contain = self.get_coords(grid, lambda x: x == zone_to_contain_id)
+                for r, c in zone_to_contain:
+                    grid[r][c] = -zone_to_contain_id
+
+                walls += len(self.neighbours(zone_to_contain, uncontaminated, dedupe=False))
+
+                for r, c in lost_anyway:
+                    grid[r][c] = 1
+
+                virus_spread.remove(virus_spread[impacts.index(biggest_impact)])
+                for spread in virus_spread:
+                    for r, c in spread:
+                        grid[r][c] = 1
+
+            return walls
+
+    return Solution().contain_virus(playing_field)
 
 
 if __name__ == '__main__':
