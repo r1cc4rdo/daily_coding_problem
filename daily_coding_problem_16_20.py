@@ -88,36 +88,42 @@ def coding_problem_17(path_str):
     >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext')
     32
     """
-    # if not path_str:
-    #     return 0
-    #
-    # level = 0
-    # dirs = [None]
-    # tokens = path_str.split('\n')
-    # for token in tokens:
-    #
-    #     tabs = 0
-    #     while token[tabs] == '\t':
-    #         tabs += 1
-    #
-    #     if tabs == level:
-    #
-    #         dirs[-1] = token
-    #
-    #     elif tabs == level + 1:
-    #
-    #     elif tabs == level - 1:
-    #
-    #     else:
-    #
-    #         raise
+    if not path_str:
+        return 0
 
-    return 32
+    level = 0
+    max_len = 0
+    dirs = [None]
+    tokens = path_str.split('\n')
+    for token in tokens:
+
+        tabs = 0
+        while token[tabs] == '\t':
+            tabs += 1
+
+        if tabs == level:  # substitute current leaf
+
+            dirs[-1] = token
+
+        elif tabs == level + 1:  # go deeper
+
+            level += 1
+            dirs.append(token)
+            max_len = max(max_len, len(' '.join(map(str.strip, dirs))))
+
+        elif tabs > level + 1:  # malformed string
+
+            raise RuntimeError('Malformed path string')
+
+        else:  # tabs < level
+
+            level = tabs
+            dirs = dirs[:level + 1]
+
+    return max_len
 
 
 if __name__ == '__main__':
-
-    print coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext')
 
     import doctest
     doctest.testmod(verbose=True)
