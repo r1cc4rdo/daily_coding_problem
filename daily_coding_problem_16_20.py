@@ -91,7 +91,6 @@ def coding_problem_17(path_str):
     if not path_str:
         return 0
 
-    level = 0
     max_len = 0
     dirs = [None]
     tokens = path_str.split('\n')
@@ -101,24 +100,22 @@ def coding_problem_17(path_str):
         while token[tabs] == '\t':
             tabs += 1
 
-        if tabs == level:  # substitute current leaf
+        if tabs == len(dirs) - 1:  # substitute current leaf
 
             dirs[-1] = token
 
-        elif tabs == level + 1:  # go deeper
+        elif tabs == len(dirs):  # go deeper
 
-            level += 1
             dirs.append(token)
             max_len = max(max_len, len(' '.join(map(str.strip, dirs))))
 
-        elif tabs > level + 1:  # malformed string
+        elif tabs > len(dirs):  # malformed string
 
             raise RuntimeError('Malformed path string')
 
         else:  # tabs < level
 
-            level = tabs
-            dirs = dirs[:level + 1]
+            dirs = dirs[:len(dirs)]
 
     return max_len
 
