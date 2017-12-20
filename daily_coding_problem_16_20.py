@@ -120,6 +120,36 @@ def coding_problem_17(path_str):
     return max_len
 
 
+def coding_problem_18(arr, k):
+    """
+    Given an array of integers and a number k, where 1 <= k <= length of the array, compute the maximum values of each
+    sub-array of length k. Do this in O(n) time and O(k) space. You can modify the input array in-place and you do not
+    need to store the results. You can simply print them out as you compute them.
+    Example:
+
+    >>> coding_problem_18([10, 5, 2, 7, 8, 7], 3)
+    [10, 7, 8, 8]
+    """
+    for cnt in xrange(k - 1):
+        arr = [max(index, next) for index, next in zip(arr[:-1], arr[1:])]
+
+    return arr
+
+
+def coding_problem_19(costs):
+    """
+    A builder is looking to build a row of N houses that can be of K different colors. He has a goal of minimizing cost
+    while ensuring that no two neighboring houses are of the same color. Given an N by K matrix where the nth row and
+    kth column represents the cost to build the nth house with kth color, return the minimum cost.
+    """
+    best_cost = [0] * len(costs[0])
+    for cost in costs:  # add a house at a time
+        for index in xrange(len(cost)):  # best cost is the one for that color plus min cost between every other color
+            best_cost[index] = cost[index] + min(best_cost[:index] + best_cost[index + 1:])
+
+    return min(best_cost)
+
+
 if __name__ == '__main__':
 
     import doctest

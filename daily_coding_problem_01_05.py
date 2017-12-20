@@ -38,12 +38,14 @@ def coding_problem_2(l):
     >>> coding_problem_2([1, 2, 3, 4, 5])
     [120, 60, 40, 30, 24]
     """
-    result = np.ones(len(l), dtype=type(l[0]))
-    for idx in xrange(len(l)):
-        prev = result[idx]
-        result *= l[idx]
-        result[idx] = prev
-    return list(result)
+    forward = [1] * len(l)
+    backward = [1] * len(l)
+    for idx in xrange(1, len(l)):
+
+        forward[idx] = forward[idx - 1] * l[idx - 1]
+        backward[-idx - 1] = backward[-idx] * l[-idx]
+
+    return [f * b for f, b in zip(forward, backward)]
 
 
 def coding_problem_3():
