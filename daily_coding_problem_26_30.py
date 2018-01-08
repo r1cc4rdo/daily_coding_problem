@@ -60,34 +60,119 @@ def coding_problem_27(brace_yourself):
     return brace_yourself == ''
 
 
-def coding_problem_28():
+def coding_problem_28(word_list, max_line_length):
     """
+    Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of
+    strings which represents each line, fully justified. More specifically, you should have as many words as possible
+    in each line. There should be at least one space between each word. Pad extra spaces when necessary so that each
+    line has exactly length k. Spaces should be distributed as equally as possible, with the extra spaces, if any,
+    distributed starting from the left. If you can only fit one word on a line, then you should pad the right-hand side
+    with spaces. Each word is guaranteed not to be longer than k.
+    Example:
 
-    >>> coding_problem_28()
-
+    >>> coding_problem_28(["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"], 16)
+    ['the  quick brown', 'fox  jumps  over', 'the   lazy   dog']
     """
-    pass
+    lines = []
+    while word_list:
 
+        if len(word_list) == 1:  # right-align ending word
+            lines.append('{:>{mll}}'.format(word_list[0], mll=max_line_length))
+            break
 
-def coding_problem_29():
+        words = []
+        while len(' '.join(words + word_list[:1])) <= max_line_length and word_list:
+            words += word_list[:1]
+            word_list = word_list[1:]
+
+        total_spaces = max_line_length - sum(map(len, words))
+        gaps = len(words) - 1
+        gap_len = total_spaces // gaps
+        first_gap_add = total_spaces - gap_len * gaps
+
+        lines.append(words[0] + ' ' * (gap_len + first_gap_add) + (' ' * gap_len).join(words[1:]))
+
+    return lines
+
+def coding_problem_29(rle):
     """
+    Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated
+    successive characters as a single count and character. Implement run-length encoding and decoding. You can assume
+    the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to
+    be decoded is valid.
+    Examples:
 
-    >>> coding_problem_29()
-
+    >>> coding_problem_29('AAAABBBCCDAA')
+    '4A3B2C1D2A'
+    >>> coding_problem_29('4A3B2C1D2A')
+    'AAAABBBCCDAA'
     """
-    pass
+    if rle.isalpha():  # no numbers, encode
+
+        encoded = ''
+        while rle:
+
+            idx = 0
+            while idx < len(rle) and rle[0] == rle[idx]:
+                idx += 1
+
+            encoded += str(idx) + rle[0]
+            rle = rle[idx:]
+
+        return encoded
+
+    else:  # decode
+
+        return ''.join(c * int(n) for n, c in zip(rle[::2], rle[1::2]))
 
 
-def coding_problem_30():
+def coding_problem_30(arr):
     """
+    You are given an array of non-negative integers that represents a two-dimensional elevation map where each element
+    is unit-width wall and the integer is the height. Suppose it will rain and all spots between two walls get filled
+    up. Compute how many units of water remain trapped on the map in O(N) time and O(1) space.
+    Examples:
 
-    >>> coding_problem_30()
+    >>> coding_problem_30([2, 1, 2])  # 1 unit of water in the middle
+    1
+    >>> coding_problem_30([3, 0, 1, 3, 0, 5])  # 3 units at #1, 2 at #2, and 3 at #4
+    8
 
+    We cannot hold 5 since it would run off to the left, so we can trap 8 units of water.
+
+    Note: alas, I was on the free tier and this is the last problem I was sent. It's been fun, enabling and
+    informative. Thank you dailycodingproblem.com !
     """
-    pass
+    water = 0
+    while len(arr) > 2:
+
+        lval = arr[0]  # the idea is: from the smallest left/right boundary, accumulate water level until reaching a
+        rval = arr[-1]  # higher wall inside. Then recurse with with the new bound, until only two array entries.
+        if lval <= rval:
+
+            cnt = 1
+            while arr[cnt] < arr[0]:
+                water += arr[0] - arr[cnt]
+                cnt += 1
+
+            arr = arr[cnt:]
+
+        else:
+
+            cnt = -2
+            while arr[cnt] < arr[-1]:
+                water += arr[-1] - arr[cnt]
+                cnt -= 1
+
+            arr = arr[:cnt]
+
+    return water
 
 
 if __name__ == '__main__':
+
+    assert coding_problem_30([2, 1, 2]) == 1
+    assert coding_problem_30([3, 0, 1, 3, 0, 5]) == 8
 
     import doctest
     doctest.testmod(verbose=True)
