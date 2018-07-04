@@ -104,7 +104,7 @@ def coding_problem_8(btree):
     return count, is_unival, val
 
 
-def coding_problem_9(arr):
+def coding_problem_9(int_list):
     """
     Given a list of integers, write a function that returns the largest sum of non-adjacent numbers.
     Examples:
@@ -113,17 +113,23 @@ def coding_problem_9(arr):
     12
     >>> coding_problem_9([5, 1, 1, 5])
     10
+    >>> coding_problem_9([1, 2, 3, 4, 5, 6])
+    12
+    >>> coding_problem_9([-8, 4, -3, 2, 3, 4])
+    10
+    >>> coding_problem_9([2, 4, 6, 2, 5])
+    13
     """
-    assert(len(arr) >= 3)
+    if not int_list:
+        return 0
+    elif len(int_list) <= 2:
+        return max(int_list)
 
-    max_sum = 0
-    for cnt in xrange(0, len(arr)):
+    last_num = int_list[-1] # last number in the list
+    with_last = coding_problem_9(int_list[:-2]) + last_num  # sum include last_num
+    without_last = coding_problem_9(int_list[:-1])  # sum without last_num
 
-        sum = arr[cnt] + max(arr[:cnt-1] + arr[cnt+2:])
-        max_sum = max(max_sum, sum)
-
-    return max_sum
-
+    return max(with_last, without_last)
 
 def coding_problem_10():
     """
