@@ -107,6 +107,8 @@ def coding_problem_8(btree):
 def coding_problem_9(int_list):
     """
     Given a list of integers, write a function that returns the largest sum of non-adjacent numbers.
+    The "largest sum of non-adjacent numbers" is the sum of any subset of non-contiguous elements.
+    Solution courtesy of Kye Jiang (https://github.com/Jedshady).
     Examples:
 
     >>> coding_problem_9([2, 4, 6, 8])
@@ -119,6 +121,9 @@ def coding_problem_9(int_list):
     10
     >>> coding_problem_9([2, 4, 6, 2, 5])
     13
+
+    Note: I originally interpreted the problem definition as "the largest sum of *any two* non-adjacent numbers".
+    This alternate version is preserved below as 'coding_problem_9_alternate'.
     """
     if not int_list:
         return 0
@@ -130,6 +135,35 @@ def coding_problem_9(int_list):
     without_last = coding_problem_9(int_list[:-1])  # sum without last_num
 
     return max(with_last, without_last)
+
+
+def coding_problem_9_alternate(arr):
+    """
+    Given a list of integers, write a function that returns the largest sum of any two non-adjacent numbers.
+
+    Examples:
+
+    >>> coding_problem_9_alternate([2, 4, 6, 8])
+    12
+    >>> coding_problem_9_alternate([5, 1, 1, 5])
+    10
+    >>> coding_problem_9_alternate([1, 2, 3, 4, 5, 6])
+    10
+    >>> coding_problem_9_alternate([-8, 4, -3, 2, 3, 4])
+    8
+    >>> coding_problem_9_alternate([2, 4, 6, 2, 5])
+    11
+    """
+    assert(len(arr) >= 3)
+
+    max_sum = 0
+    for cnt in xrange(0, len(arr)):
+
+        sum = arr[cnt] + max(arr[:cnt-1] + arr[cnt+2:])
+        max_sum = max(max_sum, sum)
+
+    return max_sum
+
 
 def coding_problem_10():
     """
