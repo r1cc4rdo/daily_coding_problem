@@ -1,4 +1,8 @@
-# daily_coding_problem
-Solutions to https://dailycodingproblem.com
+# Daily coding problem
 
-Now with entries from leetcode.com and a few others from my own coding interviews.
+These are my solutions to https://dailycodingproblem.com, a great resource to practice coding interviews.
+
+I have copied problem definitions and examples verbatim from the one I received, but they might occasionally differ
+from yours when questions have been updated to improve clarity or provide additional tests.
+
+Pull requests warmly welcomed if you spot issues with any of my solutions!
