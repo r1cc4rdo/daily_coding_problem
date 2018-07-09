@@ -171,8 +171,5 @@ def coding_problem_30(arr):
 
 if __name__ == '__main__':
 
-    assert coding_problem_30([2, 1, 2]) == 1
-    assert coding_problem_30([3, 0, 1, 3, 0, 5]) == 8
-
     import doctest
     doctest.testmod(verbose=True)
