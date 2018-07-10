@@ -1,13 +1,19 @@
-def coding_problem_46():
+def coding_problem_46(str):
     """
     Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum
-    length, return any one. For example, the longest palindromic substring of "aabcdcb" is "bcdcb". The longest
-    palindromic substring of "bananas" is "anana".
+    length, return any one. Examples:
 
-    >>> coding_problem_46()
+    >>> coding_problem_46("aabcdcb")
+    'bcdcb'
 
+    >>> coding_problem_46("bananas")
+    'anana'
     """
-    pass
+    for length in range(len(str), 0, -1):
+        for offset in range(len(str) - length + 1):
+            sub_str = str[offset:offset + length]
+            if sub_str == sub_str[::-1]:
+                return sub_str
 
 
 def coding_problem_47(prices):
