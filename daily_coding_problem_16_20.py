@@ -50,7 +50,7 @@ def coding_problem_16():
 
 
 def coding_problem_17(path_str):
-    r"""
+    """
     Suppose we represent our file system by a string in the following manner:
     The string "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext" represents:
 
@@ -85,39 +85,99 @@ def coding_problem_17(path_str):
     The name of a directory or sub-directory will not contain a period.
     Example:
 
+    >>> coding_problem_17('dir\n\tfile1.ext')
+    13
     >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext')
     32
+    >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext\ndir2\n\tsubdir1\n\tsubdir2\n\t\tsubsubdir1\n\t\t\tsubsubsubdir3\n\t\t\t\tfile3.ext')
+    47
     """
-    if not path_str:
-        return 0
+    class Node(object):
+        '''
+        Node of a Directory N-ary Tree
+        '''
+        def __init__(self, val=None, level=None, parent=None, is_file=False):
+            self.val = val
+            self.level = level
+            self.parent = parent
+            self.subdir = list()    # Node's children as a list
+            self.is_file =is_file
 
-    max_len = 0
-    dirs = [None]
-    tokens = path_str.split('\n')
-    for token in tokens:
+        def add_node(self, node=None):
+            self.subdir.append(node)
 
-        tabs = 0
-        while token[tabs] == '\t':
-            tabs += 1
+        def get_parent(self):
+            return self.parent
 
-        if tabs == len(dirs) - 1:  # substitute current leaf
 
-            dirs[-1] = token
+    class Tree(object):
+        '''
+        A Directory N-ary Tree
+        '''
+        def __init__(self, root=None):
+            self.root = Node('*', -1)
 
-        elif tabs == len(dirs):  # go deeper
 
-            dirs.append(token)
-            max_len = max(max_len, len(' '.join(map(str.strip, dirs))))
+    def build_tree(path_str):
+        '''
+        Build a directory n-ary tree
+        Args:
+            path_str(string): a string represented a fild system path
+        Returns:
+            Tree: a directory tree
+        '''
+        path_dir = path_str.split('\n')
+        dir_tree = Tree()
+        cur_level = -1
+        cur_root = dir_tree.root
 
-        elif tabs > len(dirs):  # malformed string
+        for token in path_dir:
+            tabs = 0
+            while token[tabs] == '\t':
+                tabs += 1
 
-            raise RuntimeError('Malformed path string')
+            if cur_level >= tabs:   # need to back track the parent node
+                i = cur_level - tabs + 1
+                while i != 0:
+                    cur_root = cur_root.get_parent()
+                    i -= 1
 
-        else:  # tabs < level
+            if len(token.split('.')) > 1:   # is a file
+                new_node = Node(token[tabs:], tabs, cur_root, True)
+            else:   # not a file
+                new_node = Node(token[tabs:], tabs, cur_root)
 
-            dirs = dirs[:len(dirs)]
+            cur_root.add_node(new_node)
+            cur_level = tabs
+            cur_root = new_node
 
-    return max_len
+        return dir_tree
+
+
+    def lgst_file_path(node):
+        '''
+        Given a tree node, find the longest absolute path to a file
+        Args:
+            node(Node): a tree node
+        Returns:
+            int: the length of the longest path
+        '''
+        if node.is_file:    # hit a leaf, and leaf is a file
+            return len(node.val)
+        if len(node.subdir) == 0:   # hit a leaf but a dir
+            return 0
+
+        max_len = 0
+        for sub_node in node.subdir:
+            max_len = max(max_len, lgst_file_path(sub_node))
+
+        # node.level < 0 means this node is root
+        length = max_len if node.level < 0 else max_len + len(node.val) + 1
+
+        return length
+
+    tree = build_tree(path_str)
+    return lgst_file_path(tree.root)
 
 
 def coding_problem_18(arr, k):
