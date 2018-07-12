@@ -50,7 +50,7 @@ def coding_problem_16():
 
 
 def coding_problem_17(path_str):
-    """
+    r"""
     Suppose we represent our file system by a string in the following manner:
     The string "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext" represents:
 
@@ -85,6 +85,8 @@ def coding_problem_17(path_str):
     The name of a directory or sub-directory will not contain a period.
     Examples:
 
+    >>> coding_problem_17('file1.ext')
+    9
     >>> coding_problem_17('dir\n\tfile1.ext')
     13
 
@@ -113,7 +115,7 @@ def coding_problem_17(path_str):
     if not path_str:
         return 0
 
-    dirs, max_len = [None], 0
+    dirs, max_len = list(), 0
     for token in path_str.split('\n'):
 
         tabs = 0
@@ -125,7 +127,7 @@ def coding_problem_17(path_str):
 
         if tabs == len(dirs):  # go one level deeper
 
-            if '.' in dirs[-1]:  # path ends with a file
+            if dirs and '.' in dirs[-1]:  # path ends with a file
                 raise RuntimeError('Malformed path string: a file cannot contain something else.')
 
             dirs.append(str.strip(token))
