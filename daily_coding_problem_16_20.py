@@ -88,6 +88,16 @@ def coding_problem_17(path_str):
     >>> coding_problem_17('dir\n\tfile1.ext')
     13
     
+    >>> coding_problem_17('dir\n\t\tfile1.ext')
+    Traceback (most recent call last):
+    ...
+    RuntimeError: Malformed path string: nesting more than one level at a time.
+
+    >>> coding_problem_17('dir\n\tfile1.ext\n\t\tchild_of_a_file.ext')
+    Traceback (most recent call last):
+    ...
+    RuntimeError: Malformed path string: a file cannot contain something else.
+
     >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext')
     32
     
@@ -109,9 +119,12 @@ def coding_problem_17(path_str):
 
         if tabs > len(dirs):  # malformed string
 
-            raise RuntimeError('Malformed path string')
+            raise RuntimeError('Malformed path string: nesting more than one level at a time.')
 
         elif tabs == len(dirs):  # go one level deeper
+
+            if '.' in dirs[-1]:
+                raise RuntimeError('Malformed path string: a file cannot contain something else.')
 
             dirs.append(str.strip(token))
             max_len = max(max_len, len('/'.join(dirs)) if '.' in dirs[-1] else 0)
