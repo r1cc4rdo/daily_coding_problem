@@ -85,6 +85,8 @@ def coding_problem_17(path_str):
     The name of a directory or sub-directory will not contain a period.
     Examples:
 
+    >>> coding_problem_17('1\n\t123.ext\n123456789.ext')
+    13
     >>> coding_problem_17('file1.ext')
     9
     >>> coding_problem_17('dir\n\tfile1.ext')
@@ -137,6 +139,8 @@ def coding_problem_17(path_str):
 
             dirs = dirs[:tabs + 1]
             dirs[-1] = str.strip(token)
+            # if after ascending, it is a file, also need to update the max_len
+            max_len = max(max_len, len('/'.join(dirs)) if '.' in dirs[-1] else 0)
 
     return max_len
 
