@@ -83,10 +83,17 @@ def coding_problem_17(path_str):
 
     The name of a file contains at least a period and an extension.
     The name of a directory or sub-directory will not contain a period.
-    Example:
-
+    Examples:
+    
+    >>> coding_problem_17('dir\n\tfile1.ext')
+    13
+    
     >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext')
     32
+    
+    >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext' +
+    ...                   '\ndir2\n\tsubdir1\n\tsubdir2\n\t\tsubsubdir1\n\t\t\tsubsubsubdir3\n\t\t\t\tfile3.ext')
+    47
     """
     if not path_str:
         return 0
@@ -100,22 +107,19 @@ def coding_problem_17(path_str):
         while token[tabs] == '\t':
             tabs += 1
 
-        if tabs == len(dirs) - 1:  # substitute current leaf
-
-            dirs[-1] = token
-
-        elif tabs == len(dirs):  # go deeper
-
-            dirs.append(token)
-            max_len = max(max_len, len(' '.join(map(str.strip, dirs))))
-
-        elif tabs > len(dirs):  # malformed string
+        if tabs > len(dirs):  # malformed string
 
             raise RuntimeError('Malformed path string')
 
-        else:  # tabs < level
+        elif tabs == len(dirs):  # go one level deeper
 
-            dirs = dirs[:len(dirs)]
+            dirs.append(str.strip(token))
+            max_len = max(max_len, len('/'.join(dirs)) if '.' in dirs[-1] else 0)
+
+        else:  # tabs < level, ascend
+
+            dirs = dirs[:tabs + 1]
+            dirs[-1] = str.strip(token)
 
     return max_len
 
