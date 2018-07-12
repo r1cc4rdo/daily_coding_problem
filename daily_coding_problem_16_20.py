@@ -98,6 +98,9 @@ def coding_problem_17(path_str):
     ...
     RuntimeError: Malformed path string: a file cannot contain something else.
 
+    >>> coding_problem_17('dir\n\tfile1.ext\n\tsubdir\n\t\tsubsubdir\n\t\t\ttsubsubsubdir')
+    13
+
     >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext')
     32
     
