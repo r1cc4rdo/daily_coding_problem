@@ -111,22 +111,19 @@ def coding_problem_17(path_str):
     if not path_str:
         return 0
 
-    max_len = 0
-    dirs = [None]
-    tokens = path_str.split('\n')
-    for token in tokens:
+    dirs, max_len = [None], 0
+    for token in path_str.split('\n'):
 
         tabs = 0
         while token[tabs] == '\t':
             tabs += 1
 
-        if tabs > len(dirs):  # malformed string
-
+        if tabs > len(dirs):
             raise RuntimeError('Malformed path string: nesting more than one level at a time.')
 
-        elif tabs == len(dirs):  # go one level deeper
+        if tabs == len(dirs):  # go one level deeper
 
-            if '.' in dirs[-1]:
+            if '.' in dirs[-1]:  # path ends with a file
                 raise RuntimeError('Malformed path string: a file cannot contain something else.')
 
             dirs.append(str.strip(token))
