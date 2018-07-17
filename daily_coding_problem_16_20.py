@@ -84,12 +84,14 @@ def coding_problem_17(path_str):
     The name of a file contains at least a period and an extension.
     The name of a directory or sub-directory will not contain a period.
     Examples:
-
-    >>> coding_problem_17('1\n\t123.ext\n123456789.ext')
-    13
+    
     >>> coding_problem_17('file1.ext')
     9
+
     >>> coding_problem_17('dir\n\tfile1.ext')
+    13
+
+    >>> coding_problem_17('0\n\t23.567\n23456789.BCD')
     13
 
     >>> coding_problem_17('dir\n\t\tfile1.ext')
@@ -105,11 +107,9 @@ def coding_problem_17(path_str):
     >>> coding_problem_17('dir\n\tfile1.ext\n\tsubdir\n\t\tsubsubdir\n\t\t\ttsubsubsubdir')
     13
 
-    >>> coding_problem_17('dir\n\tfile1.ext')
-    13
     >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext')
     32
-
+    
     >>> coding_problem_17('dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext' +
     ...                   '\ndir2\n\tsubdir1\n\tsubdir2\n\t\tsubsubdir1\n\t\t\tsubsubsubdir3\n\t\t\t\tfile3.ext')
     47
@@ -117,7 +117,7 @@ def coding_problem_17(path_str):
     if not path_str:
         return 0
 
-    dirs, max_len = list(), 0
+    dirs, max_len = [None], 0
     for token in path_str.split('\n'):
 
         tabs = 0
@@ -129,18 +129,18 @@ def coding_problem_17(path_str):
 
         if tabs == len(dirs):  # go one level deeper
 
-            if dirs and '.' in dirs[-1]:  # path ends with a file
+            if '.' in dirs[-1]:  # container is a file
                 raise RuntimeError('Malformed path string: a file cannot contain something else.')
 
-            dirs.append(str.strip(token))
-            max_len = max(max_len, len('/'.join(dirs)) if '.' in dirs[-1] else 0)
+            dirs.append(None)  # make room for the new path item
 
         else:  # tabs < level, ascend
 
             dirs = dirs[:tabs + 1]
-            dirs[-1] = str.strip(token)
-            # if after ascending, it is a file, also need to update the max_len
-            max_len = max(max_len, len('/'.join(dirs)) if '.' in dirs[-1] else 0)
+
+        dirs[-1] = str.strip(token)
+        if '.' in dirs[-1]:  # path ends with a file
+            max_len = max(max_len, len('/'.join(dirs)))
 
     return max_len
 
