@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def coding_problem_31():
     """
     The edit distance between two strings refers to the minimum number of character insertions, deletions, and
@@ -11,32 +14,55 @@ def coding_problem_31():
     pass
 
 
-def coding_problem_32():
+def coding_problem_32(exchange_matrix):
     """
     Suppose you are given a table of currency exchange rates, represented as a 2D array. Determine whether there is a
     possible arbitrage: that is, whether there is some sequence of trades you can make, starting with some amount A of
     any currency, so that you can end up with some amount greater than A of that currency.
     There are no transaction costs and you can trade fractional quantities.
 
-    >>> coding_problem_32()
+    >>> em = [[1, 2, 3], [1./2, 1, 3./2], [1./3, 2./3, 1]]
+    >>> coding_problem_32(em)
+    True
 
+    >>> em[0][2] = 2.98
+    >>> coding_problem_32(em)
+    False
+
+    Note: idea is that given a single row in the currency exchange matrix, it is possible to generate the entire 2D
+    array. Any difference between the given currency exchange matrix and the computed one implies the possibility of
+    arbitration.
+
+    For example, for five currencies and given the exchange rates from the first to the other 4 [b, c, d, e]:
+
+      |  A   B   C   D   E
+    --+------------------
+    A |  1   b   c   d   e
+    B | 1/b  1  c/b d/b e/b
+    C | 1/c b/c  1  d/b e/c
+    D | 1/d b/d c/d  1  e/d
+    E | 1/e b/e c/e d/e  1
+
+    Since floating point quantities are involved, we need to test for approximate equality.
     """
-    pass
+    em = np.array(exchange_matrix)  # ideally, we should test if the exchange_matrix is well-formed
+    cem = np.vstack(em[0, :] / em[0, n] for n in range(len(em)))  # computed exchange_matrix
+    return np.allclose(em, cem)
 
 
-def coding_problem_33():
+def coding_problem_33(arr):
     """
     Compute the running median of a sequence of numbers. That is, given a stream of numbers, print out the median of
     the list so far on each new element. Recall that the median of an even-numbered list is the average of the two
-    middle numbers.
+    middle numbers. Example:
 
-    For example, given the sequence [2, 1, 5, 7, 2, 0, 5], your algorithm should print out:
-    [2, 1.5, 2, 3.5, 2, 2, 2]
+    >>> coding_problem_33([2, 1, 5, 7, 2, 0, 5])
+    [2.0, 1.5, 2.0, 3.5, 2.0, 2.0, 2.0]
 
-    >>> coding_problem_33()
-
+    Note: cheating with numpy below, but I see no reason to make it more complicated given the request. An efficient
+    implementation would keep sorted in place the first n elements and do an insertion sort pass each time.
     """
-    pass
+    return [np.median(arr[:n + 1]) for n in range(len(arr))]
 
 
 def coding_problem_34():
