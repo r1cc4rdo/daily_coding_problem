@@ -137,6 +137,8 @@ def coding_problem_30(arr):
     1
     >>> coding_problem_30([3, 0, 1, 3, 0, 5])  # 3 units at #1, 2 at #2, and 3 at #4
     8
+    >>> coding_problem_30([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])
+    6
 
     We cannot hold 5 since it would run off to the left, so we can trap 8 units of water.
 
@@ -164,7 +166,7 @@ def coding_problem_30(arr):
                 water += arr[-1] - arr[cnt]
                 cnt -= 1
 
-            arr = arr[:cnt]
+            arr = arr[:cnt+1]
 
     return water
 
