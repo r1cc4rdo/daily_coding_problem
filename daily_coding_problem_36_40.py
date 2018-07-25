@@ -1,34 +1,63 @@
-def coding_problem_36():
+def coding_problem_36(tree):
     """
     Given the root to a binary search tree, find the second largest node in the tree.
+    Example:
 
-    >>> coding_problem_36()
+    >>> tree = [9, [4, [1, None, None], [7, [5, None, None], None]], [31, [14, None, None], [82, None, None]]]
+    >>> coding_problem_36(tree)
+    31
 
+    Note: in a binary search tree, the second largest node is the root of the largest element.
     """
-    pass
+    value, _, right = tree
+    parent = value
+    while right:
+        parent = value
+        value, _, right = right
+    return parent
 
 
-def coding_problem_37():
+def coding_problem_37(s):
     """
     The power set of a set is the set of all its subsets. Write a function that, given a set, generates its power set.
-    For example, given the set {1, 2, 3}, it should return {{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}.
-    You may also use a list or array to represent a set.
+    You may also use a list or array to represent a set. Example:
 
-    >>> coding_problem_37()
-
+    >>> sorted([sorted(subset) for subset in coding_problem_37({1, 2, 3})], cmp=lambda a, b: cmp(len(a), len(b)))
+    [[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]
     """
-    pass
+    power_set = [[]]
+    for element in s:
+        power_set.extend([[element] + subset for subset in power_set])
+    return power_set
 
 
-def coding_problem_38():
+def coding_problem_38(n):
     """
     You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board
     where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row,
-    column, or diagonal.
+    column, or diagonal. From this Wikipedia article https://en.wikipedia.org/wiki/Eight_queens_puzzle :
 
-    >>> coding_problem_38()
-
+    >>> [coding_problem_38(n + 1) for n in range(8)]
+    [1, 0, 0, 2, 10, 4, 40, 92]
     """
+    # def threat(xy0, xy1):
+    #     return xy0[0] == xy1[0] or xy0[1] == xy1[1] or abs(xy0[0] - xy1[0]) == abs(xy0[1] - xy1[1])
+    #
+    # def place_queen(available_cells):
+    #
+    #     if not available_cells:
+    #         return
+    #
+    #     for cell in available_cells:
+    #         remaining_cells = [...]
+    #         partial_solutions = place_queen(remaining_cells)
+    #         return []
+    #
+    #     return None
+    #
+    # all_cells = [(i, j) for i in range(N) for j in range(N)]
+    # all_placements = list(set(place_queen(ij) for ij in all_cells))
+    # return [placement for placement in all_placements if len(placement) == N]
     pass
 
 
