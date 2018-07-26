@@ -39,26 +39,23 @@ def coding_problem_38(n):
 
     >>> [coding_problem_38(n + 1) for n in range(8)]
     [1, 0, 0, 2, 10, 4, 40, 92]
+
+    Note: this could be made much faster by passing only valid coordinates instead of all of them each time, but
+    it is an exercise left for the reader ;)
     """
-    # def threat(xy0, xy1):
-    #     return xy0[0] == xy1[0] or xy0[1] == xy1[1] or abs(xy0[0] - xy1[0]) == abs(xy0[1] - xy1[1])
-    #
-    # def place_queen(available_cells):
-    #
-    #     if not available_cells:
-    #         return
-    #
-    #     for cell in available_cells:
-    #         remaining_cells = [...]
-    #         partial_solutions = place_queen(remaining_cells)
-    #         return []
-    #
-    #     return None
-    #
-    # all_cells = [(i, j) for i in range(N) for j in range(N)]
-    # all_placements = list(set(place_queen(ij) for ij in all_cells))
-    # return [placement for placement in all_placements if len(placement) == N]
-    pass
+    def is_threat(new_queen, board_arrangement):
+        for already_placed in board_arrangement:
+            if new_queen[0] == already_placed[0] or new_queen[1] == already_placed[1] or \
+               abs(new_queen[0] - already_placed[0]) == abs(new_queen[1] - already_placed[1]):
+                return True
+        return False  # otherwise
+
+    all_coordinates = [(i, j) for i in range(n) for j in range(n)]
+    valid_arrangements = {frozenset()}  # set for duplicate removal, empty initial arrangement
+    for _ in range(n):
+        valid_arrangements = set(arrangement.union([coord]) for arrangement in valid_arrangements
+                                 for coord in all_coordinates if not is_threat(coord, arrangement))
+    return len(valid_arrangements)
 
 
 def coding_problem_39():

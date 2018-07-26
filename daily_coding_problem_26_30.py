@@ -133,17 +133,12 @@ def coding_problem_30(arr):
     up. Compute how many units of water remain trapped on the map in O(N) time and O(1) space.
     Examples:
 
-    >>> coding_problem_30([2, 1, 2])  # 1 unit of water in the middle
+    >>> coding_problem_30([2, 1, 2])  # 1@1, 1 unit of water at index 1
     1
-    >>> coding_problem_30([3, 0, 1, 3, 0, 5])  # 3 units at #1, 2 at #2, and 3 at #4
+    >>> coding_problem_30([3, 0, 1, 3, 0, 5])  # 3@1 2@2 3@4
     8
-    >>> coding_problem_30([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])
+    >>> coding_problem_30([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])  # 1@2 1@4 2@5 1@6 1@9
     6
-
-    We cannot hold 5 since it would run off to the left, so we can trap 8 units of water.
-
-    Note: alas, I was on the free tier and this is the last problem I was sent. It's been fun, enabling and
-    informative. Thank you dailycodingproblem.com !
     """
     water = 0
     while len(arr) > 2:

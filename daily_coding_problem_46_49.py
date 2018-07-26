@@ -84,6 +84,9 @@ def coding_problem_49(arr):
     0
 
     Note: this is similar to the stock prices example of #47.
+
+    Note2: alas, I was on the free tier and this is the last problem I was sent. It's been fun, enabling and
+    informative. Thank you dailycodingproblem.com !
     """
     cumulative_sum, cumulative_sums = 0, [0]
     for val in arr:
