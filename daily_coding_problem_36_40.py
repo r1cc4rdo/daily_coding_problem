@@ -61,7 +61,7 @@ def coding_problem_38(n):
     return len(valid_arrangements)
 
 
-def coding_problem_39():
+def coding_problem_39(cells):
     """
     Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or
     alive, and at each tick, the following rules apply:
@@ -79,10 +79,29 @@ def coding_problem_39():
 
     You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
 
-    >>> coding_problem_39()
+    > >> coding_problem_39(cells)
 
+      012
+    0  *
+    1   *
+    2 ***
+
+    glider = ((0, 1), (1, 1), (2, 0), (2, 1), (2, 2))
     """
-    pass
+    glider = ((0, 1), (1, 2), (2, 0), (2, 1), (2, 2))
+
+    class Board(object):
+
+        def __init__(self, cells):
+            self.cells = cells
+
+        def __str__(self):
+            xmin, xmax, ymin, ymax = [f(xy) for xy in zip(*self.cells) for f in [min, max]]
+            return ''.join(('*' if (x, y) in self.cells else '.') + ('\n' if x == xmax else '')
+                           for y in range(ymin, ymax + 1) for x in range(xmin, xmax + 1))
+
+    b = Board(glider)
+    print b
 
 
 def coding_problem_40(numbers):
@@ -97,6 +116,8 @@ def coding_problem_40(numbers):
     19
 
     Note: the code below fails for negative numbers, but you could shift the entire array by the minimum.
+    Note2: the implementation below makes it evident that the space complexity is O(log_2(n)) rather than O(1).
+    This is always the case, unless a specific integer type or a maximum value are specified (they are not above).
     """
     bits = [0] * int(math.ceil(math.log(max(numbers), 2)))  # low endian
     for number in numbers:
