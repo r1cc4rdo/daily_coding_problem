@@ -175,7 +175,5 @@ def coding_problem_35(rgbs):
 
 if __name__ == '__main__':
 
-    print coding_problem_34("race")
-
-    # import doctest
-    # doctest.testmod(verbose=True)
+    import doctest
+    doctest.testmod(verbose=True)
