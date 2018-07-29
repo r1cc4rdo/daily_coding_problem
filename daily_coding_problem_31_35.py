@@ -85,12 +85,38 @@ def coding_problem_34(s):
     Examples:
 
     >>> coding_problem_34("race")
-    ecarace
-
+    'ecarace'
     >>> coding_problem_34("google")
-    elgoogle
+    'elgoogle'
+    >>> coding_problem_34("aibohphobia")
+    'aibohphobia'
+
+    Note: this is similar to #31.
+    For each given word w, there are 2*len(w)-1 possible palindromes made using as centers either a character (len(w))
+    or the location between two characters (len(w)-1).
     """
-    pass
+    def recurse(palindrome, halve, other):
+        if not halve or not other:
+            return (other + halve)[::-1] + palindrome + halve + other
+
+        if halve[0] == other[0]:
+            return recurse(halve[0] + palindrome + halve[0], halve[1:], other[1:])
+
+        from_halve = recurse(halve[0] + palindrome + halve[0], halve[1:], other)
+        from_other = recurse(other[0] + palindrome + other[0], halve, other[1:])
+        if len(from_halve) == len(from_other):
+            return min(from_halve, from_other)  # same length, pick lexicographically smaller
+
+        return (from_halve, from_other)[len(from_halve) > len(from_other)]  # pick shortest
+
+    def pivots(word):
+        for index in range(len(word)):
+            yield (word[index], word[:index], word[index+1:])
+        for index in range(1, len(word)):
+            yield ('', word[:index], word[index:])
+
+    candidates = [recurse(palindrome, before[::-1], after) for palindrome, before, after in pivots(s)]
+    return min(filter(lambda candidate: len(candidate) == min(map(len, candidates)), candidates))
 
 
 def coding_problem_35(rgbs):
