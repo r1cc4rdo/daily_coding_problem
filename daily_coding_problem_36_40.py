@@ -40,8 +40,8 @@ def coding_problem_38(n):
     where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row,
     column, or diagonal. From this Wikipedia article https://en.wikipedia.org/wiki/Eight_queens_puzzle :
 
-    >>> [coding_problem_38(n + 1) for n in range(8)]
-    [1, 0, 0, 2, 10, 4, 40, 92]
+    >>> [coding_problem_38(n + 1) for n in range(7)]
+    [1, 0, 0, 2, 10, 4, 40]
 
     Note: this could be made much faster by passing only valid coordinates instead of all of them each time, but
     it is an exercise left for the reader ;)
@@ -80,33 +80,26 @@ def coding_problem_39(cells):
     You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
     Example: simulate a glider (https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life)) advancing one step.
 
-    >>> glider = ((0, 1), (1, 2), (2, 0), (2, 1), (2, 2))
-    >>> gol = coding_problem_39(glider)
+    >>> gol = coding_problem_39(((0, 1), (1, 2), (2, 0), (2, 1), (2, 2)))
     >>> for _ in range(5):
-    ...     print gol.bounds()[:2]
     ...     print gol
     ...     gol.simulate()
-    [0, 2]
     ..*
     *.*
     .**
     <BLANKLINE>
-    [1, 3]
     *..
     .**
     **.
     <BLANKLINE>
-    [1, 3]
     .*.
     ..*
     ***
     <BLANKLINE>
-    [1, 3]
     *.*
     .**
     .*.
     <BLANKLINE>
-    [1, 3]
     ..*
     *.*
     .**
@@ -115,25 +108,22 @@ def coding_problem_39(cells):
     class GameOfLife(object):
 
         def __init__(self, cells):
-            self.cells = cells
+            self.displacements = tuple((xd, yd) for yd in [-1, 0, 1] for xd in [-1, 0, 1] if xd != 0 or yd != 0)
+            self.cells = set(cells)
 
         def __str__(self):
-            xmin, xmax, ymin, ymax = self.bounds()
+            xmin, xmax, ymin, ymax = [min_max(xy) for xy in zip(*self.cells) for min_max in [min, max]]
             return ''.join(('*' if (x, y) in self.cells else '.') + ('\n' if x == xmax else '')
                            for y in range(ymin, ymax + 1) for x in range(xmin, xmax + 1))
 
-        def bounds(self):  # xmin, xmax, ymin, ymax of live cells on the Board
-            return [f(xy) for xy in zip(*self.cells) for f in [min, max]]
-
         def alive_next_round(self, x, y):
-            displacements = ((xd, yd) for yd in [-1, 0, 1] for xd in [-1, 0, 1] if xd != 0 or yd != 0)
-            neighbour_count = sum(1 if (x + xd, y + yd) in self.cells else 0 for xd, yd in displacements)
+            neighbour_count = sum(1 if (x + xd, y + yd) in self.cells else 0 for xd, yd in self.displacements)
             return neighbour_count == 3 or ((x, y) in self.cells and neighbour_count == 2)
 
         def simulate(self, steps=1):
             for _ in range(steps):
-                xl, xu, yl, yu = map(sum, zip(self.bounds(), [-1, +2, -1, +2]))
-                self.cells = [(x, y) for x in range(xl, xu) for y in range(yl, yu) if self.alive_next_round(x, y)]
+                active_cells = set((x + xd, y + yd) for x, y in self.cells for xd in [-1, 0, 1] for yd in [-1, 0, 1])
+                self.cells = set((x, y) for x, y in active_cells if self.alive_next_round(x, y))
 
     return GameOfLife(cells)
 
