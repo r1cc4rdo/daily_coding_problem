@@ -1,3 +1,7 @@
+from bisect import bisect_left as bisect
+import random
+
+
 def coding_problem_11(strings, prefix):
     """
     Implement an autocomplete system. That is, given a query string s and a dictionary of all possible query strings,
@@ -13,65 +17,9 @@ def coding_problem_11(strings, prefix):
     Unless otherwise specified, I think space/computation trade-off is not worth doing more than I do below.
     The necessity of using more sophisticated solutions depends on the problem to be solved, overkill here.
     """
-    def binary_search(list_like, item, mode='any', fmap=None):
-        """
-        Pretty pleased with this binary search function. Supports searching for the first, last or any match of
-        the given item. Both the elements of the list and the item can be optionally mapped through a function which
-        should output objects supporting the standard ordering operators <=>.
-
-        Note: leaving this here for historical reasons, but I have learned that the functionalities provided below
-        are offered by the module bisect and the functions bisect_left and bisect_right (well, with the exception of
-        fmap argument -- to achieve the same effect with bisect you would have to wrap a list into a custom map
-        class exposing the __getitem__ method, and possibly all the other parts of the indexing interface).
-        """
-        fmap = fmap if fmap else lambda x: x
-        fitem = fmap(item)
-
-        first = 0
-        last = len(list_like) - 1
-        while first < last:
-
-            midpoint = (first + last) // 2
-            if fmap(list_like[midpoint]) == fitem:
-
-                if mode == 'first':  # continue searching for the first occurrence of item
-
-                    last = midpoint
-
-                elif mode == 'last':  # continue searching for the last occurrence of item
-
-                    if midpoint == first:  # end game
-
-                        if fmap(list_like[last]) == fitem:
-
-                            first += 1
-
-                        else:
-
-                            last -= 1
-
-                    else:  # more than 1 item apart
-
-                        first = midpoint
-
-                else:  # return the index of any occurrence of item
-
-                    return midpoint
-
-            elif fitem < fmap(list_like[midpoint]):
-
-                last = midpoint - 1
-
-            else:
-
-                first = midpoint + 1
-
-        return fmap(list_like[first]) == fitem, first
-
-    strings = [s.lower() for s in sorted(strings)]
-    _, s = binary_search(strings, prefix, 'first', fmap=lambda s: s[:min(3, len(s))])
-    _, e = binary_search(strings, prefix, 'last', fmap=lambda s: s[:min(3, len(s))])
-    return strings[s:(e+1)]
+    dictionary = [s.lower() for s in sorted(strings)]
+    next_prefix = prefix + 'a' if prefix[-1] == 'z' else prefix[:-1] + chr(ord(prefix[-1]) + 1)
+    return dictionary[bisect(dictionary, prefix):bisect(dictionary, next_prefix)]
 
 
 def coding_problem_12(budget, choices):
@@ -195,30 +143,12 @@ def coding_problem_15(sample_generator):
     Note: this problem only makes sense if you don't know the total number in advance. Otherwise, you would pick a
     random integer between [0..len[ and record the element corresponding to that index when processed. Setting a seed
     for the random number generator to avoid random failures due to unlucky distributions of samples.
-    """
-    import random
 
-    """    
-    sample_count = 0
-    selected_sample = None
-    rand_index = random.randrange(2**32)
-    for sample in sample_generator:
-
-        sample_count += 1
-        if rand_index % sample_count == 0:
-            selected_sample = sample
-
-    return selected_sample
-
-    The code above was my first take.
-    Does not work, because the modulus of a random integer is uniformly distributed between ALL the values that came
-    before and we are not allowed to store them (too big to fit in memory requirement). The solution is instead what
-    implemented below: assuming that at round n we have already selected between the available samples with uniform
+    Strategy: assuming that at round n we have already selected between the available samples with uniform
     probability, accept the incoming one as the new selected sample with a probability that keeps everyone's chances
     fair. Example: at n==1, the first sample as 100% chance of being selected. n==2, second sample 50% chance, n==3
     1/3 chance etc. Proof: for n==5, the prob. of choosing first sample is 1 * 0.5 * 0.666.. * 0.75 * 0.8 = 0.2 = 1/5
     """
-
     sample_count = 0
     selected_sample = None
     for sample in sample_generator:

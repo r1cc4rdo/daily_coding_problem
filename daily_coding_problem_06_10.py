@@ -6,7 +6,10 @@ def coding_problem_6():
     and a get(index) which returns the node at index.
     Example:
 
-    >>> coding_problem_6()
+    >>> l = coding_problem_6()
+    >>> for cnt in xrange(0, 4):
+    ...     l.add(cnt)
+    >>> l.get(2) == 2
     True
 
     Note: python does not have actual pointers (id() exists but it is not an actual pointer in all implementations).
@@ -53,24 +56,17 @@ def coding_problem_6():
                 current_node = self.memory[current_index]
             return current_node.val
 
-    l = XORLinkedList()
-    for cnt in xrange(0, 4):
-        l.add(cnt)
-
-    return l.get(2) == 2
+    return XORLinkedList()
 
 
 def coding_problem_7(s):
     """
     Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
-    Example:
+    Examples:
 
-    The message '111' gives 3, since it could be decoded as 'aaa', 'ka', and 'ak'.
-    >>> coding_problem_7('111')
+    >>> coding_problem_7('111')  # possible interpretations: 'aaa', 'ka', 'ak'
     3
-
-    The message '2626' gives 4, since it could be decoded as 'zz', 'zbf', 'bfz' and 'bfbf'.
-    >>> coding_problem_7('2626')
+    >>> coding_problem_7('2626')  # 'zz', 'zbf', 'bfz', 'bfbf'
     4
     """
     symbols = map(str, range(1, 27))
@@ -104,7 +100,7 @@ def coding_problem_8(btree):
     return count, is_unival, val
 
 
-def coding_problem_9(int_list):
+def coding_problem_9(numbers):
     """
     Given a list of integers, write a function that returns the largest sum of non-adjacent numbers.
     The "largest sum of non-adjacent numbers" is the sum of any subset of non-contiguous elements.
@@ -121,48 +117,16 @@ def coding_problem_9(int_list):
     10
     >>> coding_problem_9([2, 4, 6, 2, 5])
     13
-
-    Note: I originally interpreted the problem definition as "the largest sum of *any two* non-adjacent numbers".
-    This alternate version is preserved below as 'coding_problem_9_alternate'.
     """
-    if not int_list:
+    if not numbers:
         return 0
-    elif len(int_list) <= 2:
-        return max(int_list)
 
-    last_num = int_list[-1] # last number in the list
-    with_last = coding_problem_9(int_list[:-2]) + last_num  # sum include last_num
-    without_last = coding_problem_9(int_list[:-1])  # sum without last_num
+    if len(numbers) <= 2:
+        return max(numbers)
 
+    with_last = coding_problem_9(numbers[:-2]) + numbers[-1]  # sum include last number
+    without_last = coding_problem_9(numbers[:-1])  # sum without last number
     return max(with_last, without_last)
-
-
-def coding_problem_9_alternate(arr):
-    """
-    Given a list of integers, write a function that returns the largest sum of any two non-adjacent numbers.
-
-    Examples:
-
-    >>> coding_problem_9_alternate([2, 4, 6, 8])
-    12
-    >>> coding_problem_9_alternate([5, 1, 1, 5])
-    10
-    >>> coding_problem_9_alternate([1, 2, 3, 4, 5, 6])
-    10
-    >>> coding_problem_9_alternate([-8, 4, -3, 2, 3, 4])
-    8
-    >>> coding_problem_9_alternate([2, 4, 6, 2, 5])
-    11
-    """
-    assert(len(arr) >= 3)
-
-    max_sum = 0
-    for cnt in xrange(0, len(arr)):
-
-        sum = arr[cnt] + max(arr[:cnt-1] + arr[cnt+2:])
-        max_sum = max(max_sum, sum)
-
-    return max_sum
 
 
 def coding_problem_10():
