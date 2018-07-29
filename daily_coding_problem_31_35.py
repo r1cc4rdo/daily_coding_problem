@@ -95,15 +95,15 @@ def coding_problem_34(s):
     For each given word w, there are 2*len(w)-1 possible palindromes made using as centers either a character (len(w))
     or the location between two characters (len(w)-1).
     """
-    def recurse(palindrome, halve, other):
-        if not halve or not other:
-            return (other + halve)[::-1] + palindrome + halve + other
+    def recurse(palindrome, before, after):
+        if not before or not after:
+            return after[::-1] + before + palindrome + before[::-1] + after
 
-        if halve[0] == other[0]:
-            return recurse(halve[0] + palindrome + halve[0], halve[1:], other[1:])
+        if before[-1] == after[0]:
+            return recurse(after[0] + palindrome + after[0], before[:-1], after[1:])
 
-        from_halve = recurse(halve[0] + palindrome + halve[0], halve[1:], other)
-        from_other = recurse(other[0] + palindrome + other[0], halve, other[1:])
+        from_halve = recurse(before[-1] + palindrome + before[-1], before[:-1], after)
+        from_other = recurse(after[0] + palindrome + after[0], before, after[1:])
         if len(from_halve) == len(from_other):
             return min(from_halve, from_other)  # same length, pick lexicographically smaller
 
@@ -115,7 +115,7 @@ def coding_problem_34(s):
         for index in range(1, len(word)):
             yield ('', word[:index], word[index:])
 
-    candidates = [recurse(palindrome, before[::-1], after) for palindrome, before, after in pivots(s)]
+    candidates = [recurse(palindrome, before, after) for palindrome, before, after in pivots(s)]
     return min(filter(lambda candidate: len(candidate) == min(map(len, candidates)), candidates))
 
 
@@ -175,5 +175,7 @@ def coding_problem_35(rgbs):
 
 if __name__ == '__main__':
 
-    import doctest
-    doctest.testmod(verbose=True)
+    print coding_problem_34("race")
+
+    # import doctest
+    # doctest.testmod(verbose=True)
