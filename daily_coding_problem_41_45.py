@@ -10,7 +10,6 @@ def coding_problem_41(flights_db, starting_airport):
 
     >>> coding_problem_41([('SFO', 'HKO'), ('YYZ', 'SFO'), ('YUL', 'YYZ'), ('HKO', 'ORD')], 'YUL')
     ['YUL', 'YYZ', 'SFO', 'HKO', 'ORD']
-
     >>> coding_problem_41([('SFO', 'COM'), ('COM', 'YYZ')], 'COM')  # returns None
 
     >>> coding_problem_41([('A', 'B'), ('A', 'C'), ('B', 'C'), ('C', 'A')], 'A')
@@ -42,8 +41,7 @@ def coding_problem_42(numbers, target):
 
     >>> coding_problem_42([12, 1, 61, 5, 9, 2], 24)
     [12, 9, 2, 1]
-
-    >>> coding_problem_42([12, 1, 61, 5, 9, 2], 25)
+    >>> coding_problem_42([12, 1, 61, 5, 9, 2], 25)  # return None
 
     >>> coding_problem_42([12, 1, 61, 5, 9, 2], 19)
     [12, 5, 2]
@@ -132,10 +130,8 @@ def coding_problem_44(arr):
 
     >>> coding_problem_44([1, 2, 3, 4, 5])
     0
-
     >>> coding_problem_44([2, 4, 1, 3, 5])  # inversions: (2, 1), (4, 1), (4, 3)
     3
-
     >>> coding_problem_44([5, 4, 3, 2, 1])  # every distinct pair forms an inversion
     10
 

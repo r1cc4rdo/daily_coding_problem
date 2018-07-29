@@ -55,7 +55,7 @@ def coding_problem_22(dictionary, the_string):
     return result
 
 
-def coding_problem_23(map, start, end):
+def coding_problem_23(matrix, start, end):
     """
     You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall.
     Each False boolean represents a tile you can walk on. Given this matrix, a start coordinate, and an end coordinate,
@@ -66,16 +66,16 @@ def coding_problem_23(map, start, end):
 
     >>> map = [[False, False, False, False], [True, True, False, True],
     ...        [False, False, False, False], [False, False, False, False]]
-    >>> coding_problem_23(map, (3, 0), (0, 0))
+    >>> coding_problem_23(matrix, (3, 0), (0, 0))
     7
     >>> map[1][2] = True  # close off path
-    >>> coding_problem_23(map, (3, 0), (0, 0))  # None
+    >>> coding_problem_23(matrix, (3, 0), (0, 0))  # None
     """
-    coords = [(index_r, index_c) for index_r, row in enumerate(map)
+    coords = [(index_r, index_c) for index_r, row in enumerate(matrix)
               for index_c, element in enumerate(row) if not element]
 
     current_distance = 0
-    distances = [[None for col in xrange(len(map[0]))] for row in xrange(len(map))]
+    distances = [[None for col in xrange(len(matrix[0]))] for row in xrange(len(matrix))]
     distances[start[0]][start[1]] = 0
     while True:
 
@@ -106,10 +106,8 @@ def coding_problem_24():
 
     You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes.
     Each method should run in O(h), where h is the height of the tree.
-    Examples:
 
-    >>> coding_problem_24()
-
+    Note: [TODO] missing unit test for # 24
     """
     class LockingBinaryTreeNode(object):
 
@@ -153,8 +151,6 @@ def coding_problem_24():
 
         def unlock(self):
             return self.set_lock_state(False)
-
-    pass
 
 
 def coding_problem_25(rexp, string):

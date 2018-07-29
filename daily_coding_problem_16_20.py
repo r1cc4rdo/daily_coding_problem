@@ -1,4 +1,4 @@
-def coding_problem_16():
+def coding_problem_16(length):
     """
     You run a sneaker website and want to record the last N order ids in a log. Implement a data structure to
     accomplish this, with the following API:
@@ -9,8 +9,24 @@ def coding_problem_16():
     You should be as efficient with time and space as possible.
     Example:
 
-    >>> coding_problem_16()
-    True
+    >>> log = coding_problem_16(10)
+    >>> for id in xrange(20):
+    ...     log.record(id)
+
+    >>> log.get_last(0)
+    []
+    >>> log.get_last(1)
+    [19]
+    >>> log.get_last(5)
+    [15, 16, 17, 18, 19]
+
+    >>> log.record(20)
+    >>> log.record(21)
+
+    >>> log.get_last(1)
+    [21]
+    >>> log.get_last(3)
+    [19, 20, 21]
     """
     class OrdersLog(object):
 
@@ -31,22 +47,7 @@ def coding_problem_16():
             else:  # no wrapping required
                 return self.circular_buffer[start_index:self.current_index]
 
-    log = OrdersLog(10)
-    for id in xrange(20):
-        log.record(id)
-
-    assert(log.get_last(0) == [])
-    assert(log.get_last(1) == [19])
-    assert(log.get_last(5) == range(15, 20))
-
-    log.record(20)
-    log.record(21)
-
-    assert(log.get_last(0) == [])
-    assert(log.get_last(1) == [21])
-    assert(log.get_last(5) == range(17, 22))
-
-    return True
+    return OrdersLog(length)
 
 
 def coding_problem_17(path_str):
@@ -91,8 +92,8 @@ def coding_problem_17(path_str):
     >>> coding_problem_17('dir\n\tfile1.ext')
     13
 
-    >>> coding_problem_17('0\n\t23.567\n23456789.BCD')
-    13
+    >>> coding_problem_17('0\n\t23.567\n12345.789')
+    9
 
     >>> coding_problem_17('dir\n\t\tfile1.ext')
     Traceback (most recent call last):
@@ -156,7 +157,7 @@ def coding_problem_18(arr, k):
     [10, 7, 8, 8]
     """
     for cnt in xrange(k - 1):
-        arr = [max(index, next) for index, next in zip(arr[:-1], arr[1:])]
+        arr = [max(value, other) for value, other in zip(arr[:-1], arr[1:])]
 
     return arr
 
@@ -175,42 +176,42 @@ def coding_problem_19(costs):
     return min(best_cost)
 
 
-def coding_problem_20():
+def coding_problem_20(list_a, list_b):
     """
     Given two singly linked lists that intersect at some point, find the intersecting node.
     Do this in O(M + N) time (where M and N are the lengths of the lists) and constant space.
     For example, given A = 3 -> 7 -> 8 -> 10 -> 1 and B = 99 -> 1 -> 8 -> 10, return the node with value 8.
+    Example:
 
-    >>> coding_problem_20()
+    >>> class LinkedListNode(object):
+    ...
+    ...     def __init__(self, value, child=None):
+    ...         self.value = value
+    ...         self.next = child
+    ...
+    ...     def add(self, value):
+    ...         return LinkedListNode(value, self)
+    ...
+    ...     @classmethod
+    ...     def len(cls, node):
+    ...         count = 0
+    ...         while node:
+    ...             node = node.next
+    ...             count += 1
+    ...         return count
+
+    >>> common_tail = LinkedListNode(1).add(10).add(8)
+    >>> list_a = LinkedListNode(7, common_tail).add(3)
+    >>> list_b = LinkedListNode(1, common_tail).add(99).add(14)
+    >>> coding_problem_20(list_a, list_b)
     8
 
     Note: the problem statement above is ambiguous and misleading. I think B list was originally supposed to end
     up with a -> 1. This is how most problems of this type I googled are formulated. If this is not the case, this
     is akin to finding the longest common list between the lists, which I believe cannot be solved in O(M+N).
     """
-    class LinkedListNode(object):
-
-        def __init__(self, value, child=None):
-            self.value = value
-            self.next = child
-
-        def add(self, value):
-            return LinkedListNode(value, self)
-
-        @classmethod
-        def len(cls, node):
-            count = 0
-            while node:
-                node = node.next
-                count += 1
-            return count
-
-    common_tail = LinkedListNode(1).add(10).add(8)
-    list_a = LinkedListNode(7, common_tail).add(3)
-    list_b = LinkedListNode(1, common_tail).add(99).add(14)
-
-    len_a = LinkedListNode.len(list_a)
-    len_b = LinkedListNode.len(list_b)
+    len_a = list_a.len(list_a)
+    len_b = list_b.len(list_b)
     if len_b > len_a:
         list_a, list_b = list_b, list_a
 
