@@ -78,30 +78,64 @@ def coding_problem_39(cells):
     bottom-rightmost live cell.
 
     You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
+    Example: simulate a glider (https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life)) advancing one step.
 
-    > >> coding_problem_39(cells)
-
-      012
-    0  *
-    1   *
-    2 ***
-
-    glider = ((0, 1), (1, 1), (2, 0), (2, 1), (2, 2))
+    >>> glider = ((0, 1), (1, 2), (2, 0), (2, 1), (2, 2))
+    >>> gol = coding_problem_39(glider)
+    >>> for _ in range(5):
+    ...     print gol.bounds()[:2]
+    ...     print gol
+    ...     gol.simulate()
+    [0, 2]
+    ..*
+    *.*
+    .**
+    <BLANKLINE>
+    [1, 3]
+    *..
+    .**
+    **.
+    <BLANKLINE>
+    [1, 3]
+    .*.
+    ..*
+    ***
+    <BLANKLINE>
+    [1, 3]
+    *.*
+    .**
+    .*.
+    <BLANKLINE>
+    [1, 3]
+    ..*
+    *.*
+    .**
+    <BLANKLINE>
     """
-    glider = ((0, 1), (1, 2), (2, 0), (2, 1), (2, 2))
-
-    class Board(object):
+    class GameOfLife(object):
 
         def __init__(self, cells):
             self.cells = cells
 
         def __str__(self):
-            xmin, xmax, ymin, ymax = [f(xy) for xy in zip(*self.cells) for f in [min, max]]
+            xmin, xmax, ymin, ymax = self.bounds()
             return ''.join(('*' if (x, y) in self.cells else '.') + ('\n' if x == xmax else '')
                            for y in range(ymin, ymax + 1) for x in range(xmin, xmax + 1))
 
-    b = Board(glider)
-    print b
+        def bounds(self):  # xmin, xmax, ymin, ymax of live cells on the Board
+            return [f(xy) for xy in zip(*self.cells) for f in [min, max]]
+
+        def alive_next_round(self, x, y):
+            displacements = ((xd, yd) for yd in [-1, 0, 1] for xd in [-1, 0, 1] if xd != 0 or yd != 0)
+            neighbour_count = sum(1 if (x + xd, y + yd) in self.cells else 0 for xd, yd in displacements)
+            return neighbour_count == 3 or ((x, y) in self.cells and neighbour_count == 2)
+
+        def simulate(self, steps=1):
+            for _ in range(steps):
+                xl, xu, yl, yu = map(sum, zip(self.bounds(), [-1, +2, -1, +2]))
+                self.cells = [(x, y) for x in range(xl, xu) for y in range(yl, yu) if self.alive_next_round(x, y)]
+
+    return GameOfLife(cells)
 
 
 def coding_problem_40(numbers):
