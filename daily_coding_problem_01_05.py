@@ -1,5 +1,4 @@
 from collections import deque
-import numpy as np
 
 
 def coding_problem_1(stack):
@@ -48,13 +47,16 @@ def coding_problem_2(l):
     return [f * b for f, b in zip(forward, backward)]
 
 
-def coding_problem_3():
+def coding_problem_3(s):
     """
     Given the root to a binary tree, implement serialize(root), which serializes the tree
     into a string, and deserialize(s), which deserializes the string back into the tree.
     Example:
 
-    >>> coding_problem_3()
+    >>> s = '3 2 1 None None None 4 5 None None 6 None None'
+    >>> de_serialized = coding_problem_3(s)
+    >>> re_serialized = de_serialized.serialize_to_string()
+    >>> s == re_serialized
     True
     """
     class BinaryNode(object):
@@ -74,16 +76,20 @@ def coding_problem_3():
 
         @classmethod
         def deserialize(cls, queue):
-            val, lc, rc = queue.popleft(), None, None
+            val, lc, rc = queue.pop(), None, None
             if val is not None:
                 lc = cls.deserialize(queue)
                 rc = cls.deserialize(queue)
             return BinaryNode(val, lc, rc)
 
-    serialized_tree = [3, 2, 1, None, None, None, 4, 5, None, None, 6, None, None]
-    de_serialized = BinaryNode.deserialize(deque(serialized_tree))
-    re_serialized = de_serialized.serialize()
-    return serialized_tree == re_serialized
+        def serialize_to_string(self):
+            return ' '.join(repr(element) for element in self.serialize())
+
+        @classmethod
+        def deserialize_from_string(cls, s):
+            return cls.deserialize([int(token) if token != 'None' else None for token in s.split(' ')][::-1])
+
+    return BinaryNode.deserialize_from_string(s)
 
 
 def coding_problem_4(arr):
@@ -99,16 +105,10 @@ def coding_problem_4(arr):
     >>> coding_problem_4([4, 1, 2, 2, 2, 1, 0])
     3
     """
-    arr = np.array(arr)
-    arr = arr[arr > 0]
-    while True:
-        prev_arr, arr = arr, arr[arr <= len(arr)]
-        if np.array_equal(arr, prev_arr):
-            break
-
-    arr[arr - 1] = arr  # magic in-place bucket sort
-    idxs = np.argwhere(arr != range(1, 1 + len(arr))).flatten()
-    return 1 + (arr[-1] if len(idxs) == 0 else idxs[0])
+    bucket_sort = [True] + [False] * len(arr)  # skip 0 index
+    for element in filter(lambda x: 0 < x < len(arr), arr):
+        bucket_sort[element] = True
+    return bucket_sort.index(False)
 
 
 def coding_problem_5():

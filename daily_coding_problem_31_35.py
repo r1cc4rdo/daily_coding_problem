@@ -102,12 +102,12 @@ def coding_problem_34(s):
         if before[-1] == after[0]:
             return recurse(after[0] + palindrome + after[0], before[:-1], after[1:])
 
-        from_halve = recurse(before[-1] + palindrome + before[-1], before[:-1], after)
-        from_other = recurse(after[0] + palindrome + after[0], before, after[1:])
-        if len(from_halve) == len(from_other):
-            return min(from_halve, from_other)  # same length, pick lexicographically smaller
+        from_before = recurse(before[-1] + palindrome + before[-1], before[:-1], after)
+        from_after = recurse(after[0] + palindrome + after[0], before, after[1:])
+        if len(from_before) == len(from_after):
+            return min(from_before, from_after)  # same length, pick lexicographically smaller
 
-        return (from_halve, from_other)[len(from_halve) > len(from_other)]  # pick shortest
+        return (from_before, from_after)[len(from_before) > len(from_after)]  # pick shortest
 
     def pivots(word):
         for index in range(len(word)):
