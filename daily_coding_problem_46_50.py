@@ -112,7 +112,7 @@ def coding_problem_50(tree_or_number):
        /   \
       +     +
      / \   / \
-    3  2  4  5
+    3   2 4   5
 
     you should return 45, as it is (3 + 2) * (4 + 5).
     Examples:
@@ -121,6 +121,9 @@ def coding_problem_50(tree_or_number):
     45
     >>> coding_problem_50(('/', ('+', ('+', 1, 2), 3), 12))  # (1 + 2 + 3) / 12 == 0.5
     0.5
+
+    Note: problem 49 was the last one I received; this comes from github.com/r1cc4rdo/daily_coding_problem/pull/7,
+    a pull request from RMPR (https://github.com/RMPR). Thanks!
     """
     if not isinstance(tree_or_number, tuple):  # it's an integer leaf
         return tree_or_number
