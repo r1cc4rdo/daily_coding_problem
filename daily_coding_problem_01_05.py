@@ -105,10 +105,15 @@ def coding_problem_4(arr):
     >>> coding_problem_4([4, 1, 2, 2, 2, 1, 0])
     3
     """
-    bucket_sort = [True] + [False] * len(arr)  # skip 0 index
-    for element in filter(lambda x: 0 < x < len(arr), arr):
-        bucket_sort[element] = True
-    return bucket_sort.index(False)
+    arr = set(arr)  # O(n)
+    max_val = max(arr)  # O(n)
+    missing_val = max_val + 1
+    for e in range(1, max_val + 1):  # O(n)
+        if e not in arr:                 # O(1)
+            missing_val = e
+            break
+
+    return missing_val
 
 
 def coding_problem_5():
