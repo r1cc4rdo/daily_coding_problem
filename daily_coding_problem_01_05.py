@@ -92,7 +92,7 @@ def coding_problem_3(s):
     return BinaryNode.deserialize_from_string(s)
 
 
-def coding_problem_4(arr):
+def coding_problem_4(array):
     """
     Given an array of integers, find the first missing positive integer in linear time and constant space.
     You can modify the input array in-place.
@@ -104,11 +104,54 @@ def coding_problem_4(arr):
     3
     >>> coding_problem_4([4, 1, 2, 2, 2, 1, 0])
     3
+
+    Notes: the code below is a bucket sort variant, and therefore has linear time complexity equal to O(n).
+    More in detail, all the for loops in the code are O(n). The while loop is also linear, because it loops
+    only when element are not ordered and each iteration correctly positions one element of the array.
+
+    This was my original implementation, which however is not constant space:
+
+        bucket_sort = [True] + [False] * len(arr)  # skip 0 index
+        for element in filter(lambda x: 0 < x < len(arr), arr):
+            bucket_sort[element] = True
+        return bucket_sort.index(False)
+
+    The following one, also not constant space but possibly more understandable, has been contributed
+    by NikhilCodes (https://github.com/NikhilCodes):
+
+        arr = set(arr)  # O(n)
+        max_val = max(arr)  # O(n)
+        missing_val = max_val + 1
+        for e in range(1, max_val + 1):  # O(n)
+            if e not in arr:  # O(1)
+                missing_val = e
+                break
+        return missing_val
     """
-    bucket_sort = [True] + [False] * len(arr)  # skip 0 index
-    for element in filter(lambda x: 0 < x < len(arr), arr):
-        bucket_sort[element] = True
-    return bucket_sort.index(False)
+    array.append(0)  # ease indexing by aligning integers with their indexes
+    for index, element in enumerate(array):  # remove out of bounds values
+        if not (0 < element < len(array)):
+            array[index] = 0
+
+    for index in range(len(array)):
+        jumping_index = index
+        while True:
+
+            element = array[jumping_index]
+
+            if element == jumping_index:  # already in order
+                break
+
+            if element == array[element]:  # repeated element
+                break
+
+            array[jumping_index], array[element] = array[element], element  # swap elements
+
+    for index, element in enumerate(array):
+        if index != element:  # find the first missing
+            return index
+    else:
+        return len(array)  # if here, the sought integer is past the array end
 
 
 def coding_problem_5():
