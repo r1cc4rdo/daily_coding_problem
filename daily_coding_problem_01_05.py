@@ -116,8 +116,8 @@ def coding_problem_4(array):
             bucket_sort[element] = True
         return bucket_sort.index(False)
 
-    The following one, also not constant space but possibly more understandable, has been contributed
-    by NikhilCodes (https://github.com/NikhilCodes):
+    The following one, also not constant space but possibly more understandable,
+    has been contributed by NikhilCodes (https://github.com/NikhilCodes):
 
         arr = set(arr)  # O(n)
         max_val = max(arr)  # O(n)
@@ -128,30 +128,23 @@ def coding_problem_4(array):
                 break
         return missing_val
     """
-    array.append(0)  # ease indexing by aligning integers with their indexes
+    array.append(0)  # helps by aligning integers with their indexes
     for index, element in enumerate(array):  # remove out of bounds values
         if not (0 < element < len(array)):
             array[index] = 0
 
-    for index in range(len(array)):
-        jumping_index = index
+    for index in range(len(array)):  # in-place bucket sort
         while True:
-
-            element = array[jumping_index]
-
-            if element == jumping_index:  # already in order
+            element = array[index]
+            if (index == element) or (element == array[element]):  # already in order OR repeated element
                 break
-
-            if element == array[element]:  # repeated element
-                break
-
-            array[jumping_index], array[element] = array[element], element  # swap elements
+            array[index], array[element] = array[element], element  # swap elements
 
     for index, element in enumerate(array):
         if index != element:  # find the first missing
             return index
-    else:
-        return len(array)  # if here, the sought integer is past the array end
+    
+    return len(array)  # if here, the sought integer is past the array end
 
 
 def coding_problem_5():
