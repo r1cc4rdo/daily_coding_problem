@@ -1,49 +1,43 @@
-from collections import deque
+from typing import Iterable
 
 
-def coding_problem_03(s):
+def coding_problem_03():
     """
     Given the root to a binary tree, implement serialize(root), which serializes the tree
-    into a string, and deserialize(s), which deserializes the string back into the tree.
+    into a string, and deserialize(s), which de-serializes the string back into the tree.
     Example:
 
+    >>> serialize, deserialize = coding_problem_03()
     >>> s = '3 2 1 None None None 4 5 None None 6 None None'
-    >>> de_serialized = coding_problem_03(s)
-    >>> re_serialized = de_serialized.serialize_to_string()
-    >>> s == re_serialized
+    >>> tree = (3, (2, (1, None, None), None), (4, (5, None, None), (6, None, None)))
+    >>> isinstance(s, str)
     True
+
+    >>> deserialized = deserialize(s)
+    >>> tree == deserialized
+    True
+
+    >>> s == serialize(deserialized)
+    True
+
+    Notes: the implementation below tries to solve the problem as intended.
+    However, one could instead: serialize, deserialize = lambda tree: repr(tree), lambda s: eval(s)
     """
-    class BinaryNode(object):
+    def deserialize_array(array):
+        val = array.pop()
+        return None if val is None else (val, deserialize_array(array), deserialize_array(array))
 
-        def __init__(self, val, lc=None, rc=None):
-            self.val = val
-            self.lc = lc
-            self.rc = rc
+    def flatten(array):
+        return [y for x in array for y in flatten(x)] if isinstance(array, Iterable) else [array]
 
-        def serialize(self, queue=None):
-            queue = [] if queue is None else queue
-            queue.append(self.val)
-            if self.val is not None:
-                self.lc.serialize(queue)
-                self.rc.serialize(queue)
-            return queue
+    def serialize(array):
+        return ' '.join(repr(element) for element in flatten(array))
 
-        @classmethod
-        def deserialize(cls, queue):
-            val, lc, rc = queue.pop(), None, None
-            if val is not None:
-                lc = cls.deserialize(queue)
-                rc = cls.deserialize(queue)
-            return BinaryNode(val, lc, rc)
+    def deserialize(s):
+        values = [int(token) if token != 'None' else None for token in s.split()]
+        return deserialize_array(values[::-1])
 
-        def serialize_to_string(self):
-            return ' '.join(repr(element) for element in self.serialize())
-
-        @classmethod
-        def deserialize_from_string(cls, s):
-            return cls.deserialize([int(token) if token != 'None' else None for token in s.split(' ')][::-1])
-
-    return BinaryNode.deserialize_from_string(s)
+    return serialize, deserialize
 
 
 if __name__ == '__main__':

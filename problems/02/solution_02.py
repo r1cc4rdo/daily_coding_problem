@@ -1,6 +1,3 @@
-from collections import deque
-
-
 def coding_problem_02(l):
     """
     Given an array of integers, return a new array such that each element at index i of
@@ -13,7 +10,7 @@ def coding_problem_02(l):
     """
     forward = [1] * len(l)
     backward = [1] * len(l)
-    for idx in xrange(1, len(l)):
+    for idx in range(1, len(l)):
 
         forward[idx] = forward[idx - 1] * l[idx - 1]
         backward[-idx - 1] = backward[-idx] * l[-idx]

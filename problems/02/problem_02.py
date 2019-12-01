@@ -1,6 +1,3 @@
-from collections import deque
-
-
 def coding_problem_02(l):
     """
     Given an array of integers, return a new array such that each element at index i of

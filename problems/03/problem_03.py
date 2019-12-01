@@ -1,16 +1,15 @@
-from collections import deque
-
-
-def coding_problem_03(s):
+def coding_problem_03():
     """
     Given the root to a binary tree, implement serialize(root), which serializes the tree
-    into a string, and deserialize(s), which deserializes the string back into the tree.
+    into a string, and deserialize(s), which de-serializes the string back into the tree.
     Example:
 
-    >>> s = '3 2 1 None None None 4 5 None None 6 None None'
-    >>> de_serialized = coding_problem_03(s)
-    >>> re_serialized = de_serialized.serialize_to_string()
-    >>> s == re_serialized
+    >>> serialize, deserialize = coding_problem_03()
+    >>> s = '>>> YOUR OWN TREE ENCODING HERE <<<'
+    >>> isinstance(s, str)
+    True
+
+    >>> s == serialize(deserialize(s))
     True
     """
     pass
