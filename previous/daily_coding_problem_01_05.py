@@ -1,15 +1,15 @@
 from collections import deque
 
 
-def coding_problem_1(stack):
+def coding_problem_01(stack):
     """
     Given a stack of N elements, interleave the first half of the stack
     with the second half reversed using one other queue.
     Example:
 
-    >>> coding_problem_1([1, 2, 3, 4, 5])
+    >>> coding_problem_01([1, 2, 3, 4, 5])
     [1, 5, 2, 4, 3]
-    >>> coding_problem_1([1, 2, 3, 4, 5, 6])
+    >>> coding_problem_01([1, 2, 3, 4, 5, 6])
     [1, 6, 2, 5, 3, 4]
 
     Note: with Python lists, you could instead islice(chain.from_iterable(izip(l, reversed(l))), len(l))
@@ -27,14 +27,14 @@ def coding_problem_1(stack):
     return stack
 
 
-def coding_problem_2(l):
+def coding_problem_02(l):
     """
     Given an array of integers, return a new array such that each element at index i of
     the new array is the product of all the numbers in the original array except the one at i.
     Solve it without using division and in O(n).
     Example:
 
-    >>> coding_problem_2([1, 2, 3, 4, 5])
+    >>> coding_problem_02([1, 2, 3, 4, 5])
     [120, 60, 40, 30, 24]
     """
     forward = [1] * len(l)
@@ -47,14 +47,14 @@ def coding_problem_2(l):
     return [f * b for f, b in zip(forward, backward)]
 
 
-def coding_problem_3(s):
+def coding_problem_03(s):
     """
     Given the root to a binary tree, implement serialize(root), which serializes the tree
     into a string, and deserialize(s), which deserializes the string back into the tree.
     Example:
 
     >>> s = '3 2 1 None None None 4 5 None None 6 None None'
-    >>> de_serialized = coding_problem_3(s)
+    >>> de_serialized = coding_problem_03(s)
     >>> re_serialized = de_serialized.serialize_to_string()
     >>> s == re_serialized
     True
@@ -92,17 +92,17 @@ def coding_problem_3(s):
     return BinaryNode.deserialize_from_string(s)
 
 
-def coding_problem_4(array):
+def coding_problem_04(array):
     """
     Given an array of integers, find the first missing positive integer in linear time and constant space.
     You can modify the input array in-place.
     Example:
 
-    >>> coding_problem_4([3, 4, -1, 1])
+    >>> coding_problem_04([3, 4, -1, 1])
     2
-    >>> coding_problem_4([1, 2, 0])
+    >>> coding_problem_04([1, 2, 0])
     3
-    >>> coding_problem_4([4, 1, 2, 2, 2, 1, 0])
+    >>> coding_problem_04([4, 1, 2, 2, 2, 1, 0])
     3
 
     Notes: the code below is a bucket sort variant, and therefore has linear time complexity equal to O(n).
@@ -147,13 +147,13 @@ def coding_problem_4(array):
     return len(array)  # if here, the sought integer is past the array end
 
 
-def coding_problem_5():
+def coding_problem_05():
     """
     cons(a, b) constructs a pair, and car(pair) and cdr(pair) returns the first and last element of that pair.
     Given this implementation of cons below, implement car and cdr.
     Examples: car(cons(3, 4)) == 3, cdr(cons(3, 4)) == 4
 
-    >>> coding_problem_5()
+    >>> coding_problem_05()
     True
     """
     def cons(a, b):

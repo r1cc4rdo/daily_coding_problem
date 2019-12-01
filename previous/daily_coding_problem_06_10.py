@@ -1,4 +1,4 @@
-def coding_problem_6():
+def coding_problem_06():
     """
     An XOR linked list is a more memory efficient doubly linked list.
     Instead of each node holding next and prev fields, it holds a field named both, which is a XOR of the next node
@@ -6,7 +6,7 @@ def coding_problem_6():
     and a get(index) which returns the node at index.
     Example:
 
-    >>> l = coding_problem_6()
+    >>> l = coding_problem_06()
     >>> for cnt in xrange(0, 4):
     ...     l.add(cnt)
     >>> l.get(2) == 2
@@ -59,14 +59,14 @@ def coding_problem_6():
     return XORLinkedList()
 
 
-def coding_problem_7(s):
+def coding_problem_07(s):
     """
     Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
     Examples:
 
-    >>> coding_problem_7('111')  # possible interpretations: 'aaa', 'ka', 'ak'
+    >>> coding_problem_07('111')  # possible interpretations: 'aaa', 'ka', 'ak'
     3
-    >>> coding_problem_7('2626')  # 'zz', 'zbf', 'bfz', 'bfbf'
+    >>> coding_problem_07('2626')  # 'zz', 'zbf', 'bfz', 'bfbf'
     4
     """
     symbols = map(str, range(1, 27))
@@ -74,48 +74,48 @@ def coding_problem_7(s):
         return 1
 
     matches = filter(lambda symbol: s.startswith(symbol), symbols)
-    encodings = [coding_problem_7(s[len(m):]) for m in matches]
+    encodings = [coding_problem_07(s[len(m):]) for m in matches]
     return sum(encodings)
 
 
-def coding_problem_8(btree):
+def coding_problem_08(btree):
     """
     A unival tree (which stands for "universal value") is a tree where all nodes have the same value.
     Given the root to a binary tree, count the number of unival subtrees.
     Example:
 
     >>> btree = (0, (0, (0, None, None), (0, (0, None, None), (0, None, None))), (1, None, None))
-    >>> coding_problem_8(btree)[0]
+    >>> coding_problem_08(btree)[0]
     6
     """
     val, ln, rn = btree
     if ln is None and rn is None:  # leaf case
         return 1, True, val
 
-    lcount, is_uni_l, lval = coding_problem_8(ln)
-    rcount, is_uni_r, rval = coding_problem_8(rn)
+    lcount, is_uni_l, lval = coding_problem_08(ln)
+    rcount, is_uni_r, rval = coding_problem_08(rn)
 
     is_unival = is_uni_l and is_uni_r and val == lval and val == rval
     count = lcount + rcount + is_unival
     return count, is_unival, val
 
 
-def coding_problem_9(numbers):
+def coding_problem_09(numbers):
     """
     Given a list of integers, write a function that returns the largest sum of non-adjacent numbers.
     The "largest sum of non-adjacent numbers" is the sum of any subset of non-contiguous elements.
     Solution courtesy of Kye Jiang (https://github.com/Jedshady).
     Examples:
 
-    >>> coding_problem_9([2, 4, 6, 8])
+    >>> coding_problem_09([2, 4, 6, 8])
     12
-    >>> coding_problem_9([5, 1, 1, 5])
+    >>> coding_problem_09([5, 1, 1, 5])
     10
-    >>> coding_problem_9([1, 2, 3, 4, 5, 6])
+    >>> coding_problem_09([1, 2, 3, 4, 5, 6])
     12
-    >>> coding_problem_9([-8, 4, -3, 2, 3, 4])
+    >>> coding_problem_09([-8, 4, -3, 2, 3, 4])
     10
-    >>> coding_problem_9([2, 4, 6, 2, 5])
+    >>> coding_problem_09([2, 4, 6, 2, 5])
     13
     """
     if not numbers:
@@ -124,8 +124,8 @@ def coding_problem_9(numbers):
     if len(numbers) <= 2:
         return max(numbers)
 
-    with_last = coding_problem_9(numbers[:-2]) + numbers[-1]  # sum include last number
-    without_last = coding_problem_9(numbers[:-1])  # sum without last number
+    with_last = coding_problem_09(numbers[:-2]) + numbers[-1]  # sum include last number
+    without_last = coding_problem_09(numbers[:-1])  # sum without last number
     return max(with_last, without_last)
 
 
