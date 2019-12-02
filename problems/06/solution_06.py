@@ -7,14 +7,13 @@ def coding_problem_06():
     Example:
 
     >>> l = coding_problem_06()
-    >>> for cnt in xrange(0, 4):
+    >>> for cnt in range(0, 4):
     ...     l.add(cnt)
     >>> l.get(2) == 2
     True
 
     Note: python does not have actual pointers (id() exists but it is not an actual pointer in all implementations).
-    For this reason, we use a python list to simulate memory. Indexes are the addresses in memory. This has the
-    unfortunate consequence that the travel logic needs to reside in the List class rather than the Node one.
+    For this reason, we use a python list to simulate memory. Indexes are the addresses in memory.
     """
     class XORLinkedListNode(object):
 
@@ -51,7 +50,7 @@ def coding_problem_06():
 
         def get(self, index):
             current_index, previous_index, current_node = self.head()
-            for cnt in xrange(index + 1):
+            for cnt in range(index + 1):
                 previous_index, current_index = current_index, current_node.next_node(previous_index)
                 current_node = self.memory[current_index]
             return current_node.val

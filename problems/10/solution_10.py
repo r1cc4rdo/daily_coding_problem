@@ -16,14 +16,14 @@ def coding_problem_10():
         return f()
 
     def hello(name):
-        print 'Hello {}'.format(name)
+        print(f'Hello {name}')
 
     job = Thread(target=delayed_execution, args=(lambda: hello('from thread'), 0.01))
     job.start()
 
-    print 'Before'
+    print('Before')
     time.sleep(0.02)
-    print 'After'
+    print('After')
 
 
 if __name__ == '__main__':

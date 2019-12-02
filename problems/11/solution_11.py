@@ -1,5 +1,4 @@
 from bisect import bisect_left as bisect
-import random
 
 
 def coding_problem_11(strings, prefix):
@@ -13,9 +12,9 @@ def coding_problem_11(strings, prefix):
     >>> coding_problem_11(words, 'abo')
     ['abode', 'about', 'above']
 
-    Note: I have been thinking of lots of potential data structures, like hierarchical dictionaries, or hashing.
-    Unless otherwise specified, I think space/computation trade-off is not worth doing more than I do below.
-    The necessity of using more sophisticated solutions depends on the problem to be solved, overkill here.
+    Note: the complexity of the code below is already logarithmic. Faster speed are possible with hierarchical
+    dictionaries or hashing scheme, if we are willing to pay a space complexity trade-off. Using more sophisticated
+    approaches must be justified over actual requirements, overkill here.
     """
     dictionary = [s.lower() for s in sorted(strings)]
     next_prefix = prefix + 'a' if prefix[-1] == 'z' else prefix[:-1] + chr(ord(prefix[-1]) + 1)

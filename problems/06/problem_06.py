@@ -6,15 +6,11 @@ def coding_problem_06():
     and a get(index) which returns the node at index.
     Example:
 
-    >>> l = coding_problem_06()
-    >>> for cnt in xrange(0, 4):
-    ...     l.add(cnt)
-    >>> l.get(2) == 2
+    >>> xll = coding_problem_06()
+    >>> for cnt in range(0, 4):
+    ...     xll.add(cnt)
+    >>> xll.get(2) == 2
     True
-
-    Note: python does not have actual pointers (id() exists but it is not an actual pointer in all implementations).
-    For this reason, we use a python list to simulate memory. Indexes are the addresses in memory. This has the
-    unfortunate consequence that the travel logic needs to reside in the List class rather than the Node one.
     """
     pass
 

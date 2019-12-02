@@ -1,7 +1,3 @@
-from bisect import bisect_left as bisect
-import random
-
-
 def coding_problem_12(budget, choices):
     """
     There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a
@@ -18,7 +14,7 @@ def coding_problem_12(budget, choices):
     integers X? For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
     Example:
 
-    >>> coding_problem_12(4, [1, 2])
+    >>> coding_problem_12(budget=4, choices=[1, 2])
     5
     """
     pass

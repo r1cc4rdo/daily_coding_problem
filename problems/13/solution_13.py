@@ -1,7 +1,3 @@
-from bisect import bisect_left as bisect
-import random
-
-
 def coding_problem_13(s, k):
     """
     Given an integer k and a string s, find the length of the longest substring that contains at most k distinct

@@ -1,4 +1,4 @@
-from bisect import bisect_left as bisect
+import math
 import random
 
 
@@ -18,14 +18,11 @@ def coding_problem_14():
     require too much time each time, since convergence is exponentially slow. Also priming the random number generator
     to avoid random failure for unlucky distributions of samples.
     """
-    import math
-    import random
-
     inside = samples = cnt = 0
     pi_approx = 3.0  # physicist $/pi$
     while True:
 
-        for cnt in xrange(10000):
+        for cnt in range(10000):
 
             inside += math.hypot(random.random(), random.random()) <= 1
 

@@ -5,7 +5,7 @@ def coding_problem_08(btree):
     Example:
 
     >>> btree = (0, (0, (0, None, None), (0, (0, None, None), (0, None, None))), (1, None, None))
-    >>> coding_problem_08(btree)[0]
+    >>> coding_problem_08(btree)
     6
     """
     pass
