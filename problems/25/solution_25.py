@@ -22,7 +22,7 @@ def coding_problem_25(rexp, string):
 
         if len(rexp) >= 2 and rexp[1] == '*':
 
-            for cnt in xrange(len(string)):
+            for cnt in range(len(string)):
                 if coding_problem_25(''.join([rexp[0]] * cnt) + rexp[2:], string):
                     return True
 

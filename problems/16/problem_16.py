@@ -10,7 +10,7 @@ def coding_problem_16(length):
     Example:
 
     >>> log = coding_problem_16(10)
-    >>> for id in xrange(20):
+    >>> for id in range(20):
     ...     log.record(id)
 
     >>> log.get_last(0)

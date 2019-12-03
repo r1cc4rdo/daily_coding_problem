@@ -8,7 +8,7 @@ def coding_problem_18(arr, k):
     >>> coding_problem_18([10, 5, 2, 7, 8, 7], 3)
     [10, 7, 8, 8]
     """
-    for cnt in xrange(k - 1):
+    for _ in range(k - 1):
         arr = [max(value, other) for value, other in zip(arr[:-1], arr[1:])]
 
     return arr

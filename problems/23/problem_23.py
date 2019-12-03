@@ -11,8 +11,10 @@ def coding_problem_23(matrix, start, end):
     ...        [False, False, False, False], [False, False, False, False]]
     >>> coding_problem_23(matrix, (3, 0), (0, 0))
     7
+
     >>> map[1][2] = True  # close off path
     >>> coding_problem_23(matrix, (3, 0), (0, 0))  # None
+
     """
     pass
 

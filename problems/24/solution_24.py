@@ -1,5 +1,5 @@
 def coding_problem_24():
-    """
+    r"""
     Implement locking in a binary tree. A binary tree node can be locked or unlocked only if any of its descendants or
     ancestors are not locked. Write a binary tree node class with the following methods:
 
@@ -11,50 +11,82 @@ def coding_problem_24():
     You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes.
     Each method should run in O(h), where h is the height of the tree.
 
-    Note: [TODO] missing unit test for # 24
+    Example:
+
+    >>> node_class = coding_problem_24()
+
+          root
+        /     \
+       Y      Z
+      / \    / \
+     *  *   X  *
+           / \
+          *  *
+
+    >>> X, Y = node_class(), node_class()
+    >>> Z = node_class(right_child=X)
+    >>> root = node_class(left_child=Y, right_child=Z)
+
+    >>> Z.lock()
+    True
+
+    >>> Z.is_locked()
+    True
+
+    >>> root.is_locked()
+    False
+
+    >>> root.lock()  # because descendants are locked
+    False
+
+    >>> X.lock()  # because ancestors are locked
+    False
+
+    >>> Z.unlock()
+    True
+
+    >>> X.lock()
+    True
     """
     class LockingBinaryTreeNode(object):
 
-        def __init__(self, p, l=None, r=None):
-            self.left = l
-            self.right = r
-            self.parent = p
-            self.lock = False
+        def __init__(self, parent_node=None, left_child=None, right_child=None):
+            self.parent, self.left, self.right = parent_node, left_child, right_child
+            self.locked, self.descendants_locked = False, False
+            for child_node in (left_child, right_child):
+                if child_node:
+                    child_node.parent = self
 
         def is_locked(self):
-            return self.lock
+            return self.locked
 
-        def can_lock(self):
-            walk_up = self
-            while walk_up:
-                if walk_up.lock:
-                    return False
-                walk_up = walk_up.parent
-            return self.recursive_walk_down(self.left) and self.recursive_walk_down(self.right)
+        def set_lock(self, lock_state):
 
-        @staticmethod
-        def recursive_walk_down(node):
+            if self.descendants_locked:
+                return False  # locked by descendants
 
-            if node is None:
-                return True
+            parent_node = self.parent
+            while parent_node:  # complexity bounded by tree depth O(h)
+                if parent_node.locked:
+                    return False  # locked by ancestors
+                parent_node = parent_node.parent
 
-            if node.lock:
-                return False
+            self.locked = lock_state
+            parent_node = self.parent  # parent_node
+            while parent_node:  # update ancestors inherited locks, complexity bounded by tree depth O(h)
+                parent_node.descendants_locked = any(False if node is None else (node.locked or node.descendants_locked)
+                                                     for node in (parent_node.left, parent_node.right))
+                parent_node = parent_node.parent
 
-            return LockingBinaryTreeNode.recursive_walk_down(node.left) and \
-                   LockingBinaryTreeNode.recursive_walk_down(node.right)
-
-        def set_lock_state(self, lock_state):
-            success = self.can_lock()
-            if success:
-                self.lock = lock_state
-            return success
+            return True
 
         def lock(self):
-            return self.set_lock_state(True)
+            return self.set_lock(True)
 
         def unlock(self):
-            return self.set_lock_state(False)
+            return self.set_lock(False)
+
+    return LockingBinaryTreeNode
 
 
 if __name__ == '__main__':

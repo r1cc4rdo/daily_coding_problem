@@ -11,14 +11,16 @@ def coding_problem_23(matrix, start, end):
     ...        [False, False, False, False], [False, False, False, False]]
     >>> coding_problem_23(matrix, (3, 0), (0, 0))
     7
+
     >>> map[1][2] = True  # close off path
     >>> coding_problem_23(matrix, (3, 0), (0, 0))  # None
+
     """
     coords = [(index_r, index_c) for index_r, row in enumerate(matrix)
               for index_c, element in enumerate(row) if not element]
 
     current_distance = 0
-    distances = [[None for col in xrange(len(matrix[0]))] for row in xrange(len(matrix))]
+    distances = [[None for col in range(len(matrix[0]))] for row in range(len(matrix))]
     distances[start[0]][start[1]] = 0
     while True:
 

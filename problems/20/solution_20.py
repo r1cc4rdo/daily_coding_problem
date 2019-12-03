@@ -37,10 +37,10 @@ def coding_problem_20(list_a, list_b):
     if len_b > len_a:
         list_a, list_b = list_b, list_a
 
-    for advance in xrange(abs(len_a - len_b)):
+    for advance in range(abs(len_a - len_b)):
         list_a = list_a.next
 
-    for check in xrange(len_b):
+    for check in range(len_b):
         if list_a is list_b:
             return list_a.value
 
