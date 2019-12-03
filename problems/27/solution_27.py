@@ -1,3 +1,6 @@
+from functools import reduce
+
+
 def coding_problem_27(brace_yourself):
     """
     Given a string of round, curly, and square open and closing brackets, return whether the brackets are
@@ -12,10 +15,10 @@ def coding_problem_27(brace_yourself):
     False
 
     Note: I get it. This wants me to keep track of all opening parenthesis in a stack, and remove the top after
-    encountering a closing one, provided it's of the matching type. Easy enough, BUT! such an algorithm requires lots of
-    bookkeeping and it's inherently sequential. My implementation below works in a number of passes that only depends
-    on the nesting levels of the braces; memory usage is O(n) for both solutions. Also, string operations are highly
-    optimized, making this even faster.
+    encountering a closing one, provided it's of the matching type. Such an algorithm requires bookkeeping and it's
+    inherently sequential. My implementation below works instead in a number of passes that only depends on the nesting
+    levels of the braces. Memory usage is O(n) for both solutions but since string operations are highly optimized,
+    this alternate solution is much faster for any non-trivial example.
     """
     copy = None
     while brace_yourself and brace_yourself != copy:

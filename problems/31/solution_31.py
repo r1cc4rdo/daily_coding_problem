@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def coding_problem_31(s, t, debt=0):
     """
     Given two strings, compute the edit distance between them.

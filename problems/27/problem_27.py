@@ -10,12 +10,6 @@ def coding_problem_27(brace_yourself):
     False
     >>> coding_problem_27('((()')
     False
-
-    Note: I get it. This wants me to keep track of all opening parenthesis in a stack, and remove the top after
-    encountering a closing one, provided it's of the matching type. Easy enough, BUT! such an algorithm requires lots of
-    bookkeeping and it's inherently sequential. My implementation below works in a number of passes that only depends
-    on the nesting levels of the braces; memory usage is O(n) for both solutions. Also, string operations are highly
-    optimized, making this even faster.
     """
     pass
 
