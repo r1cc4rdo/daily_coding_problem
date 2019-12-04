@@ -1,6 +1,3 @@
-from copy import copy
-
-
 def coding_problem_43():
     """
     Implement a stack that has the following methods:

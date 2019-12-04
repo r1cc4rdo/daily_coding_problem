@@ -1,6 +1,3 @@
-from copy import copy
-
-
 def coding_problem_44(arr):
     """
     We can determine how "out of order" an array A is by counting the number of inversions it has. Two elements A[i]
@@ -17,15 +14,13 @@ def coding_problem_44(arr):
     10
 
     Note: complexity is that of sorting O(n log(n)) plus a linear pass O(n), therefore bounded by O(n log(n))
-    Note2: [TODO] idea is here, but should avoid using .index(), which is a linear search. Committing as is for now.
     """
-    inversions = 0
-    sorted_indexes = [xi[1] for xi in sorted(zip(arr, range(len(arr))), cmp=lambda x, y: cmp(x[0], y[0]))]
-    for index in range(len(sorted_indexes)):
+    sorted_indexes = sorted(range(len(arr)), key=lambda x: arr[x])
 
-        destination = sorted_indexes.index(index)
-        sorted_indexes.remove(index)
-        inversions += destination
+    inversions = 0
+    while sorted_indexes:
+        inversions += sorted_indexes[0]
+        sorted_indexes = [si - 1 if si > sorted_indexes[0] else si for si in sorted_indexes[1:]]
 
     return inversions
 

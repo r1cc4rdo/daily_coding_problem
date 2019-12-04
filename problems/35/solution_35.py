@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def coding_problem_35(rgbs):
     """
     Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the 'R's

@@ -1,6 +1,3 @@
-from copy import copy
-
-
 def coding_problem_41(flights_db, starting_airport):
     """
     Given an unordered list of flights taken by someone, each represented as (origin, destination) pairs, and a

@@ -1,6 +1,3 @@
-import operator as ops
-
-
 def coding_problem_46(str):
     """
     Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum

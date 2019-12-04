@@ -1,6 +1,3 @@
-import operator as ops
-
-
 def coding_problem_47(prices):
     """
     Given a array of numbers representing the stock prices of a company in chronological order, write a function that

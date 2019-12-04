@@ -1,6 +1,3 @@
-import math
-
-
 def coding_problem_36(tree):
     """
     Given the root to a binary search tree, find the second largest node in the tree.

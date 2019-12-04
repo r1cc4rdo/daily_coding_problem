@@ -1,6 +1,3 @@
-import operator as ops
-
-
 def coding_problem_49(arr):
     """
     Given an array of numbers, find the maximum sum of any contiguous subarray of the array.
@@ -13,11 +10,6 @@ def coding_problem_49(arr):
     137
     >>> coding_problem_49([-5, -1, -8, -9])
     0
-
-    Note: this is similar to the stock prices example of #47.
-
-    Note2: alas, I was on the free tier and this is the last problem I was sent. It's been fun, enabling and
-    informative. Thank you dailycodingproblem.com !
     """
     cumulative_sum, cumulative_sums = 0, [0]
     for val in arr:

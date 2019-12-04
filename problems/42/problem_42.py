@@ -1,6 +1,3 @@
-from copy import copy
-
-
 def coding_problem_42(numbers, target):
     """
     Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k.

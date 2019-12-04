@@ -1,6 +1,7 @@
-##Problem 48
+## Problem 48
 
 Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
+
 Example:
 
     >>> def pre_order(tree):

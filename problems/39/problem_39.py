@@ -1,6 +1,3 @@
-import math
-
-
 def coding_problem_39(cells):
     """
     Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or
@@ -18,7 +15,7 @@ def coding_problem_39(cells):
     bottom-rightmost live cell.
 
     You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
-    Example: simulate a glider (https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life)) advancing one step.
+    Example. Simulate a glider https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life) advancing five steps:
 
     >>> gol = coding_problem_39(((0, 1), (1, 2), (2, 0), (2, 1), (2, 2)))
     >>> for _ in range(5):

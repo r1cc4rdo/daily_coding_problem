@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def coding_problem_34(s):
     """
     Given a string, find the palindrome that can be made by inserting the fewest number of characters as possible
@@ -16,8 +13,8 @@ def coding_problem_34(s):
     'aibohphobia'
 
     Note: this is similar to #31.
-    For each given word w, there are 2*len(w)-1 possible palindromes made using as centers either a character (len(w))
-    or the location between two characters (len(w)-1).
+    For each given word w, there are 2*len(w)-1 possible palindromes made using as
+    centers either a character (len(w)) or the location between two characters (len(w)-1).
     """
     def recurse(palindrome, before, after):
         if not before or not after:

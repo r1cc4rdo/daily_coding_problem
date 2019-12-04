@@ -21,7 +21,7 @@ def coding_problem_41(flights_db, starting_airport):
         return [starting_airport]
 
     legs = [leg for leg in flights_db if leg[0] == starting_airport]
-    for leg in sorted(legs, cmp=lambda la, lb: cmp(la[1], lb[1])):
+    for leg in sorted(legs, key=lambda l: l[1]):
 
         unused_legs = copy(flights_db)
         unused_legs.remove(leg)
