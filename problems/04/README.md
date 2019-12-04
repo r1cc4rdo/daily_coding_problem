@@ -1,4 +1,4 @@
-## Problem 4
+## [<<](../03) Problem 04 [>>](../05)
 
 Given an array of integers, find the first missing positive integer in linear time and constant space.
 You can modify the input array in-place.

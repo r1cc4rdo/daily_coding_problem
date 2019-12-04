@@ -1,4 +1,4 @@
-## Problem 5
+## [<<](../04) Problem 05 [>>](../06)
 
 cons(a, b) constructs a pair, and car(pair) and cdr(pair) returns the first and last element of that pair.
 

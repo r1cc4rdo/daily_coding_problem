@@ -1,4 +1,4 @@
-##Problem 16
+## [<<](../15) Problem 16 [>>](../17)
 
 You run a sneaker website and want to record the last N order ids in a log. Implement a data structure to
 accomplish this, with the following API:

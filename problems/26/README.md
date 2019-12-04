@@ -1,4 +1,4 @@
-## Problem 26
+## [<<](../25) Problem 26 [>>](../27)
 
 Given a singly linked list and an integer k, remove the kth last element from the list. k is guaranteed to be
 smaller than the length of the list. The list is very long, so making more than one pass is prohibitively expensive.

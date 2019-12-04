@@ -1,4 +1,4 @@
-## Problem 28
+## [<<](../27) Problem 28 [>>](../29)
 
 Write an algorithm to justify text.
 

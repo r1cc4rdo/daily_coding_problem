@@ -1,4 +1,4 @@
-## Problem 43
+## [<<](../42) Problem 43 [>>](../44)
 
 Implement a stack that has the following methods:
 

@@ -1,4 +1,4 @@
-## Problem 31
+## [<<](../30) Problem 31 [>>](../32)
 
 Given two strings, compute the edit distance between them.
 
