@@ -7,7 +7,7 @@ def coding_problem_06():
     Example:
 
     >>> l = coding_problem_06()
-    >>> for cnt in xrange(0, 4):
+    >>> for cnt in range(0, 4):
     ...     l.add(cnt)
     >>> l.get(2) == 2
     True
@@ -51,7 +51,7 @@ def coding_problem_06():
 
         def get(self, index):
             current_index, previous_index, current_node = self.head()
-            for cnt in xrange(index + 1):
+            for cnt in range(index + 1):
                 previous_index, current_index = current_index, current_node.next_node(previous_index)
                 current_node = self.memory[current_index]
             return current_node.val
@@ -147,14 +147,14 @@ def coding_problem_10():
         return f()
 
     def hello(name):
-        print 'Hello {}'.format(name)
+        print('Hello {}'.format(name))
 
     job = Thread(target=delayed_execution, args=(lambda: hello('from thread'), 0.01))
     job.start()
 
-    print 'Before'
+    print('Before')
     time.sleep(0.02)
-    print 'After'
+    print('After')
 
 
 if __name__ == '__main__':

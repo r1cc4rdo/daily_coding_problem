@@ -9,12 +9,12 @@ Example:
     >>> random.seed(0xBADC0FFE)
 
     >>> def sample_gen_fun(n):
-    ...     for x in xrange(n):
+    ...     for x in range(n):
     ...         yield x
 
     >>> num = 10
     >>> hist = [0] * num
-    >>> for trials in xrange(5000):
+    >>> for trials in range(5000):
     ...     hist[coding_problem_15(sample_gen_fun(num))] += 1
 
     >>> all(abs(float(h) / sum(hist) - 1.0 / len(hist)) < 0.01 for h in hist)

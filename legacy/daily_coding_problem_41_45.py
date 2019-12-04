@@ -21,7 +21,7 @@ def coding_problem_41(flights_db, starting_airport):
         return [starting_airport]
 
     legs = [leg for leg in flights_db if leg[0] == starting_airport]
-    for leg in sorted(legs, cmp=lambda la, lb: cmp(la[1], lb[1])):
+    for leg in sorted(legs, key=lambda x: x[1]):
 
         unused_legs = copy(flights_db)
         unused_legs.remove(leg)
@@ -139,7 +139,7 @@ def coding_problem_44(arr):
     Note2: [TODO] idea is here, but should avoid using .index(), which is a linear search. Committing as is for now.
     """
     inversions = 0
-    sorted_indexes = [xi[1] for xi in sorted(zip(arr, range(len(arr))), cmp=lambda x, y: cmp(x[0], y[0]))]
+    sorted_indexes = sorted(range(len(arr)), key=lambda x: arr[x])
     for index in range(len(sorted_indexes)):
 
         destination = sorted_indexes.index(index)

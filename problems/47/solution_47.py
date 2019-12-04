@@ -11,10 +11,10 @@ def coding_problem_47(prices):
     Here's the inefficient one-liner:
 
     >>> prices = [9, 11, 8, 5, 7, 10]
-    >>> max([max(prices[today + 1:]) - prices[today] for today in xrange(len(prices) - 1)])
+    >>> max([max(prices[today + 1:]) - prices[today] for today in range(len(prices) - 1)])
     5
     """
-    max_future_price, max_profit = None, None
+    max_future_price, max_profit = prices[-1], 0
     for index in range(len(prices) - 1, 0, -1):
         max_future_price = max(max_future_price, prices[index])
         max_profit = max(max_profit, max_future_price - prices[index - 1])

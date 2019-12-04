@@ -9,11 +9,11 @@ def coding_problem_23(matrix, start, end):
 
     >>> map = [[False, False, False, False], [True, True, False, True],
     ...        [False, False, False, False], [False, False, False, False]]
-    >>> coding_problem_23(matrix, (3, 0), (0, 0))
+    >>> coding_problem_23(map, (3, 0), (0, 0))
     7
 
     >>> map[1][2] = True  # close off path
-    >>> coding_problem_23(matrix, (3, 0), (0, 0))  # None
+    >>> coding_problem_23(map, (3, 0), (0, 0))  # None
 
     """
     coords = [(index_r, index_c) for index_r, row in enumerate(matrix)

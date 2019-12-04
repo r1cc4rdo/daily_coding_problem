@@ -58,7 +58,7 @@ def coding_problem_32(exchange_matrix):
     Since floating point quantities are involved, we need to test for approximate equality.
     """
     em = np.array(exchange_matrix)  # ideally, we should test if the exchange_matrix is well-formed
-    cem = np.vstack(em[0, :] / em[0, n] for n in range(len(em)))  # computed exchange_matrix
+    cem = np.vstack([em[0, :] / em[0, n] for n in range(len(em))])  # computed exchange_matrix
     return np.allclose(em, cem)
 
 

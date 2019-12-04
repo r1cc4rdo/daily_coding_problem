@@ -16,7 +16,7 @@ def coding_problem_49(arr):
         cumulative_sum += val
         cumulative_sums.append(cumulative_sum)
 
-    highest_peak, max_sum = None, 0
+    highest_peak, max_sum = cumulative_sums[-1], 0
     for index in range(len(cumulative_sums) - 1, 0, -1):
         highest_peak = max(highest_peak, cumulative_sums[index])
         max_sum = max(max_sum, highest_peak - cumulative_sums[index - 1])

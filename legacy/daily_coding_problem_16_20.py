@@ -10,7 +10,7 @@ def coding_problem_16(length):
     Example:
 
     >>> log = coding_problem_16(10)
-    >>> for id in xrange(20):
+    >>> for id in range(20):
     ...     log.record(id)
 
     >>> log.get_last(0)
@@ -156,7 +156,7 @@ def coding_problem_18(arr, k):
     >>> coding_problem_18([10, 5, 2, 7, 8, 7], 3)
     [10, 7, 8, 8]
     """
-    for cnt in xrange(k - 1):
+    for cnt in range(k - 1):
         arr = [max(value, other) for value, other in zip(arr[:-1], arr[1:])]
 
     return arr
@@ -170,7 +170,7 @@ def coding_problem_19(costs):
     """
     best_cost = [0] * len(costs[0])
     for cost in costs:  # add a house at a time
-        for index in xrange(len(cost)):  # best cost is the one for that color plus min cost between every other color
+        for index in range(len(cost)):  # best cost is the one for that color plus min cost between every other color
             best_cost[index] = cost[index] + min(best_cost[:index] + best_cost[index + 1:])
 
     return min(best_cost)
@@ -215,10 +215,10 @@ def coding_problem_20(list_a, list_b):
     if len_b > len_a:
         list_a, list_b = list_b, list_a
 
-    for advance in xrange(abs(len_a - len_b)):
+    for advance in range(abs(len_a - len_b)):
         list_a = list_a.next
 
-    for check in xrange(len_b):
+    for check in range(len_b):
         if list_a is list_b:
             return list_a.value
 

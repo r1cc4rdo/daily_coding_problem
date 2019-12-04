@@ -1,3 +1,14 @@
+try:
+    from future.utils import implements_iterator
+except ImportError:
+    pass
+
+try:
+    from functools import reduce
+except ImportError:
+    pass
+
+
 def coding_problem_26(not_a_linked_list, k):
     """
     Given a singly linked list and an integer k, remove the kth last element from the list. k is guaranteed to be
@@ -15,19 +26,19 @@ def coding_problem_26(not_a_linked_list, k):
     k-buffer of the stream, would not be constant space. If you're reading this and have better ideas, let me know!
     """
     iter_to_the_end = iter(not_a_linked_list)
-    for _ in xrange(k):
-        iter_to_the_end.next()  # k is guaranteed < len(list)
+    for _ in range(k):
+        next(iter_to_the_end)  # k is guaranteed < len(list)
 
     result = []
     iter_lagging_behind = iter(not_a_linked_list)
     while True:
-        result.append(iter_lagging_behind.next())
+        result.append(next(iter_lagging_behind))
         try:
-            iter_to_the_end.next()
+            next(iter_to_the_end)
         except StopIteration:
             break
 
-    iter_lagging_behind.next()  # gobble an element
+    next(iter_lagging_behind)  # gobble an element
     result.extend(iter_lagging_behind)
     return result
 

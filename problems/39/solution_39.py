@@ -19,7 +19,7 @@ def coding_problem_39(cells):
 
     >>> gol = coding_problem_39(((0, 1), (1, 2), (2, 0), (2, 1), (2, 2)))
     >>> for _ in range(5):
-    ...     print gol
+    ...     print(gol)
     ...     gol.simulate()
     ..*
     *.*

@@ -108,7 +108,7 @@ def coding_problem_14():
     pi_approx = 3.0  # physicist $/pi$
     while True:
 
-        for cnt in xrange(10000):
+        for cnt in range(10000):
 
             inside += math.hypot(random.random(), random.random()) <= 1
 
@@ -128,12 +128,12 @@ def coding_problem_15(sample_generator):
     >>> random.seed(0xBADC0FFE)
     >>>
     >>> def sample_gen_fun(n):
-    ...     for x in xrange(n):
+    ...     for x in range(n):
     ...         yield x
     >>>
     >>> num = 10
     >>> hist = [0] * num
-    >>> for trials in xrange(5000):
+    >>> for trials in range(5000):
     ...
     ...     hist[coding_problem_15(sample_gen_fun(num))] += 1
     >>>

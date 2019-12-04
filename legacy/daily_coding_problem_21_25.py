@@ -66,16 +66,16 @@ def coding_problem_23(matrix, start, end):
 
     >>> map = [[False, False, False, False], [True, True, False, True],
     ...        [False, False, False, False], [False, False, False, False]]
-    >>> coding_problem_23(matrix, (3, 0), (0, 0))
+    >>> coding_problem_23(map, (3, 0), (0, 0))
     7
     >>> map[1][2] = True  # close off path
-    >>> coding_problem_23(matrix, (3, 0), (0, 0))  # None
+    >>> coding_problem_23(map, (3, 0), (0, 0))  # None
     """
     coords = [(index_r, index_c) for index_r, row in enumerate(matrix)
               for index_c, element in enumerate(row) if not element]
 
     current_distance = 0
-    distances = [[None for col in xrange(len(matrix[0]))] for row in xrange(len(matrix))]
+    distances = [[None for col in range(len(matrix[0]))] for row in range(len(matrix))]
     distances[start[0]][start[1]] = 0
     while True:
 
@@ -177,7 +177,7 @@ def coding_problem_25(rexp, string):
 
         if len(rexp) >= 2 and rexp[1] == '*':
 
-            for cnt in xrange(len(string)):
+            for cnt in range(len(string)):
                 if coding_problem_25(''.join([rexp[0]] * cnt) + rexp[2:], string):
                     return True
 
