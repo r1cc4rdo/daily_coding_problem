@@ -6,9 +6,9 @@ I have copied problem definitions and examples verbatim from the one I received,
 from yours when questions have been updated to improve clarity or provide additional tests.
 Notes added after examples are comments of mine.
 
-Pull requests warmly welcomed if you spot issues with any of my solutions!
-
 ## Problems
+
+Each problem comes with a description, a unit tests' battery and a solution.
 
 |  # | Description               | Problem                              | Solution                               |
 |----|---------------------------|--------------------------------------|----------------------------------------|
@@ -62,6 +62,17 @@ Pull requests warmly welcomed if you spot issues with any of my solutions!
 | 48 | [Reconstruct tree from pre-order and in-order traversals](problems/48) | [problem](problems/48/problem_48.py) | [solution](problems/48/solution_48.py) |
 | 49 | [Find the maximum sum of any contiguous subarray](problems/49) | [problem](problems/49/problem_49.py) | [solution](problems/49/solution_49.py) |
 | 50 | [Compute an arithmetic expression tree](problems/50) | [problem](problems/50/problem_50.py) | [solution](problems/50/solution_50.py) |
+
+## How to contribute
+
+Pull requests warmly welcomed if you spot issues with any of my solutions!
+
+You can also contribute additional unit tests for interesting untested scenarios.
+
+## Running tests
+
+To run all the unit tests for the provided solutions, use the [run_tests.py](problems/run_tests.py) scripts inside the
+[problems](problems) and [legacy](legacy) directories.
 
 ## Python 2.7 compatible versions
 
