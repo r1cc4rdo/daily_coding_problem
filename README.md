@@ -63,6 +63,8 @@ Each problem comes with a description, a unit tests' battery and a solution.
 | 49 | [Find the maximum sum of any contiguous subarray](problems/49) | [problem](problems/49/problem_49.py) | [solution](problems/49/solution_49.py) |
 | 50 | [Compute an arithmetic expression tree](problems/50) | [problem](problems/50/problem_50.py) | [solution](problems/50/solution_50.py) |
 
+Just Looking for a [FizzBuzz](https://wiki.c2.com/?FizzBuzzTest) implementation? Find a few [here](problems/fizzbuzz.py)!
+
 ## How to contribute
 
 Pull requests warmly welcomed if you spot issues with any of my solutions!
