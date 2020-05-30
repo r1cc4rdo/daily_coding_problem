@@ -7,12 +7,12 @@ def coding_problem_23(matrix, start, end):
     around the edges of the board.
     Examples:
 
-    >>> map = [[False, False, False, False], [True, True, False, True],
-    ...        [False, False, False, False], [False, False, False, False]]
+    >>> matrix = [[False] * 4] * 4
+    >>> matrix[1] = [True, True, False, True]
     >>> coding_problem_23(matrix, (3, 0), (0, 0))
     7
 
-    >>> map[1][2] = True  # close off path
+    >>> matrix[1][2] = True  # close off path
     >>> coding_problem_23(matrix, (3, 0), (0, 0))  # None
 
     """
@@ -20,6 +20,5 @@ def coding_problem_23(matrix, start, end):
 
 
 if __name__ == '__main__':
-
     import doctest
     doctest.testmod(verbose=True)
