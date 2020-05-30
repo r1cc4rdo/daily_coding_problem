@@ -1,4 +1,4 @@
-## [<<](../22) [23] Solve a maze [>>](../24)[23] Solve a maze./22) [23] Solve a maze [>>](../24)
+## [<<](../22) [23] Solve a maze [>>](../24)
 
 You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall.
 Each False boolean represents a tile you can walk on. Given this matrix, a start coordinate, and an end coordinate,
