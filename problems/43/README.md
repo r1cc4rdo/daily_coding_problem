@@ -1,4 +1,4 @@
-## [<<](../42) Problem 43 [>>](../44)
+## [<<](../42) [43] Implement a stack with a ma [>>](../44)
 
 Implement a stack that has the following methods:
 

@@ -1,4 +1,4 @@
-## [<<](../23) Problem 24 [>>](../25)
+## [<<](../23) [24] Implement locking in a binary tree [>>](../25)
 
 Implement locking in a binary tree. A binary tree node can be locked or unlocked only if any of its descendants or
 ancestors are not locked. Write a binary tree node class with the following methods:

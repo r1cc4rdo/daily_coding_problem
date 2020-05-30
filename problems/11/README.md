@@ -1,4 +1,4 @@
-## [<<](../10) Problem 11 [>>](../12)
+## [<<](../10) [11] Implement an autocomplete system [>>](../12)
 
 Implement an autocomplete system. That is, given a query string s and a dictionary of all possible query strings,
 return all strings in the dictionary that have s as a prefix.

@@ -1,4 +1,4 @@
-## [<<](../15) Problem 16 [>>](../17)
+## [<<](../15) [16] Implement an purchase orders' log [>>](../17)
 
 You run a sneaker website and want to record the last N order ids in a log. Implement a data structure to
 accomplish this, with the following API:

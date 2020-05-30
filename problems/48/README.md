@@ -1,4 +1,4 @@
-## [<<](../47) Problem 48 [>>](../49)
+## [<<](../47) [48] Reconstruct tree from pre-order and in-order traversals [>>](../49)
 
 Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
 

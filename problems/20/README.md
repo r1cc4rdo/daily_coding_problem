@@ -1,4 +1,4 @@
-## [<<](../19) Problem 20 [>>](../21)
+## [<<](../19) [20] Find intersection between single linked lists [>>](../21)
 
 Given two singly linked lists that intersect at some point, find the intersecting node.
 Do this in O(M + N) time (where M and N are the lengths of the lists) and constant space.

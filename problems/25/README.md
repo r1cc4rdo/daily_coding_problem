@@ -1,4 +1,4 @@
-## [<<](../24) Problem 25 [>>](../26)
+## [<<](../24) [25] Implement regular expression matcher [>>](../26)
 
 Implement regular expression matching with the following special characters:
 

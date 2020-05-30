@@ -1,4 +1,4 @@
-## [<<](../30) Problem 31 [>>](../32)
+## [<<](../30) [31] Compute the edit distance between two strings [>>](../32)
 
 Given two strings, compute the edit distance between them.
 

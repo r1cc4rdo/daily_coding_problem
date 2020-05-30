@@ -1,4 +1,4 @@
-## [<<](../05) Problem 06 [>>](../07)
+## [<<](../05) [06] Implement a XOR linked list [>>](../07)
 
 An XOR linked list is a more memory efficient doubly linked list.
 Instead of each node holding next and prev fields, it holds a field named both, which is a XOR of the next node

@@ -1,4 +1,4 @@
-## [<<](../12) Problem 13 [>>](../14)
+## [<<](../12) [13] Longest substring made of k distinct characters [>>](../14)
 
 Given an integer k and a string s, find the length of the longest substring that contains at most k distinct
 characters.

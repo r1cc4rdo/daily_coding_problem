@@ -1,4 +1,4 @@
-## [<<](../39) Problem 40 [>>](../41)
+## [<<](../39) [40] Find the non-duplicated integer [>>](../41)
 
 Given an array of integers where every integer occurs three times except for one integer, which only occurs once,
 find and return the non-duplicated integer. Do this in O(N) time and O(1) space.

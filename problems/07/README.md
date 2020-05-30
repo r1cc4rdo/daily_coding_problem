@@ -1,4 +1,4 @@
-## [<<](../06) Problem 07 [>>](../08)
+## [<<](../06) [07] Count the number of decodings for a message [>>](../08)
 
 Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
 

@@ -1,4 +1,4 @@
-## [<<](../45) Problem 46 [>>](../47)
+## [<<](../45) [46] Find the longest contiguous palindrome [>>](../47)
 
 Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum
 length, return any one.

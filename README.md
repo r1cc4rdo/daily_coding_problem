@@ -10,6 +10,8 @@ Notes added after examples are comments of mine.
 
 Each problem comes with a description, a unit tests' battery and a solution.
 
+Just looking for a [FizzBuzz](https://wiki.c2.com/?FizzBuzzTest) implementation? Find a few [here](problems/fizzbuzz.py)!
+
 |  # | Description               | Problem                              | Solution                               |
 |----|---------------------------|--------------------------------------|----------------------------------------|
 | 01 | [Interleave the elements of a stack using a queue](problems/01) | [problem](problems/01/problem_01.py) | [solution](problems/01/solution_01.py) |
@@ -62,8 +64,6 @@ Each problem comes with a description, a unit tests' battery and a solution.
 | 48 | [Reconstruct tree from pre-order and in-order traversals](problems/48) | [problem](problems/48/problem_48.py) | [solution](problems/48/solution_48.py) |
 | 49 | [Find the maximum sum of any contiguous subarray](problems/49) | [problem](problems/49/problem_49.py) | [solution](problems/49/solution_49.py) |
 | 50 | [Compute an arithmetic expression tree](problems/50) | [problem](problems/50/problem_50.py) | [solution](problems/50/solution_50.py) |
-
-Just Looking for a [FizzBuzz](https://wiki.c2.com/?FizzBuzzTest) implementation? Find a few [here](problems/fizzbuzz.py)!
 
 ## How to contribute
 

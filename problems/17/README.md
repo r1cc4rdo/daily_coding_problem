@@ -1,4 +1,4 @@
-## [<<](../16) Problem 17 [>>](../18)
+## [<<](../16) [17] Longest path in a filesystem [>>](../18)
 
 Suppose we represent our file system by a string in the following manner:
 The string "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext" represents:

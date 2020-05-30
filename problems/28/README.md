@@ -1,4 +1,4 @@
-## [<<](../27) Problem 28 [>>](../29)
+## [<<](../27) [28] Write an algorithm to justify text [>>](../29)
 
 Write an algorithm to justify text.
 

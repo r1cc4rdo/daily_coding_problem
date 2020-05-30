@@ -1,4 +1,4 @@
-## [<<](..) Problem 01 [>>](../02)
+## [<<](..) [01] Interleave the elements of a stack using a queue [>>](../02)
 
 Given a stack of N elements, interleave the first half of the stack
 with the second half reversed using one other queue.

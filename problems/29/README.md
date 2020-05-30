@@ -1,4 +1,4 @@
-## [<<](../28) Problem 29 [>>](../30)
+## [<<](../28) [29] Run-length encoding and decoding [>>](../30)
 
 Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated
 successive characters as a single count and character. Implement run-length encoding and decoding. You can assume

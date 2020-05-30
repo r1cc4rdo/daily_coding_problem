@@ -1,4 +1,4 @@
-## [<<](../34) Problem 35 [>>](../36)
+## [<<](../34) [35] Segregate the values of an array [>>](../36)
 
 Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the 'R's
 come first, the 'G's come second, and the 'B's come last. You can only swap elements of the array.

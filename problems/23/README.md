@@ -1,4 +1,4 @@
-## [<<](../22) Problem 23 [>>](../24)
+## [<<](../22) [23] Solve a maze [>>](../24)[23] Solve a maze./22) [23] Solve a maze [>>](../24)
 
 You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall.
 Each False boolean represents a tile you can walk on. Given this matrix, a start coordinate, and an end coordinate,
@@ -8,11 +8,10 @@ around the edges of the board.
 
 Examples:
 
-    >>> map = [[False, False, False, False], [True, True, False, True],
-    ...        [False, False, False, False], [False, False, False, False]]
+    >>> matrix = [[False] * 4] * 4
+    >>> matrix[1] = [True, True, False, True]
     >>> coding_problem_23(matrix, (3, 0), (0, 0))
     7
-    
-    >>> map[1][2] = True  # close off path
-    >>> coding_problem_23(matrix, (3, 0), (0, 0))  # returns None
-    
+
+    >>> matrix[1][2] = True  # close off path
+    >>> coding_problem_23(matrix, (3, 0), (0, 0))  # None

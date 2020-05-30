@@ -1,4 +1,4 @@
-## [<<](../35) Problem 36 [>>](../37)
+## [<<](../35) [36] Find the second largest node in the tree [>>](../37)
 
 Given the root to a binary search tree, find the second largest node in the tree.
 

@@ -1,4 +1,4 @@
-## [<<](../08) Problem 09 [>>](../10)
+## [<<](../08) [09] Largest sum of non-adjacent numbers [>>](../10)
 
 Given a list of integers, write a function that returns the largest sum of non-adjacent numbers.
 The "largest sum of non-adjacent numbers" is the sum of any subset of non-contiguous elements.

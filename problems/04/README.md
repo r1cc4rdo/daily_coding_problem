@@ -1,4 +1,4 @@
-## [<<](../03) Problem 04 [>>](../05)
+## [<<](../03) [04] Find the first missing positive integer [>>](../05)
 
 Given an array of integers, find the first missing positive integer in linear time and constant space.
 You can modify the input array in-place.
