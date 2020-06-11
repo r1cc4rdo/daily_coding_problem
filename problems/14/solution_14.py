@@ -18,18 +18,14 @@ def coding_problem_14():
     require too much time each time, since convergence is exponentially slow. Also priming the random number generator
     to avoid random failure for unlucky distributions of samples.
     """
-    inside = samples = cnt = 0
-    pi_approx = 3.0  # physicist $/pi$
-    while True:
-
-        for cnt in range(10000):
-
-            inside += math.hypot(random.random(), random.random()) <= 1
-
-        samples += cnt + 1
-        prev_pi, pi_approx = pi_approx, 4 * float(inside) / samples
-        if abs(pi_approx - prev_pi) < 1e-5:
-            return pi_approx
+    inside, total, prev_pi, pi_approx = 0, 0, 0, 1
+    while abs(pi_approx - prev_pi) > 1e-5:
+        total += 10000
+        for _ in range(10000):
+            x, y = random.random(), random.random()
+            inside += (x**2 + y**2) < 1  # 1**2 == 1
+        prev_pi, pi_approx = pi_approx, (4. * inside) / total
+    return pi_approx
 
 
 if __name__ == '__main__':
