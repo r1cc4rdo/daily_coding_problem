@@ -4,41 +4,47 @@ def coding_problem_30(arr):
     is unit-width wall and the integer is the height. Suppose it will rain and all spots between two walls get filled
     up. Compute how many units of water remain trapped on the map in O(N) time and O(1) space.
     Examples:
-
+    >>> coding_problem_30([])  # no water trapped
+    0
+    >>> coding_problem_30([1])  # no water trapped
+    0
+    >>> coding_problem_30([2, 1])  # no water trapped
+    0
+    >>> coding_problem_30([1, 2, 2, 3, 1, 1])  # no water trapped
+    0
     >>> coding_problem_30([2, 1, 2])  # 1@1, 1 unit of water at index 1
     1
     >>> coding_problem_30([3, 0, 1, 3, 0, 5])  # 3@1 2@2 3@4
     8
     >>> coding_problem_30([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])  # 1@2 1@4 2@5 1@6 1@9
     6
+
+    The idea here is to find inner basins bounded by areas of higher elevation.
+    Starting from the left and right boundaries, we keep track of the highest value found so far.
+    We respectively advance or retreat either end until they collide. We always move the lowest.
+    Water gets trapped at a index if its value is lower than both the current left and right maximums.
     """
+    if len(arr) <= 2:
+        return 0
+
     water = 0
-    while len(arr) > 2:
+    left_index, left_max_value = 0, arr[0]
+    right_index, right_max_value = len(arr) - 1, arr[-1]
+    while left_index < right_index:
 
-        lval = arr[0]  # the idea is: from the smallest left/right boundary, accumulate water level until reaching a
-        rval = arr[-1]  # higher wall inside. Then recurse with with the new bound, until only two array entries.
-        if lval <= rval:
+        advance_left = left_max_value < right_max_value
+        left_index += 1 if advance_left else 0
+        right_index -= 0 if advance_left else 1
 
-            cnt = 1
-            while arr[cnt] < arr[0]:
-                water += arr[0] - arr[cnt]
-                cnt += 1
+        index = left_index if advance_left else right_index
+        water += max(0, min(left_max_value, right_max_value) - arr[index])
 
-            arr = arr[cnt:]
-
-        else:
-
-            cnt = -2
-            while arr[cnt] < arr[-1]:
-                water += arr[-1] - arr[cnt]
-                cnt -= 1
-
-            arr = arr[:cnt+1]
+        left_max_value = max(left_max_value, arr[left_index])
+        right_max_value = max(right_max_value, arr[right_index])
 
     return water
 
 
 if __name__ == '__main__':
-
     import doctest
     doctest.testmod(verbose=True)
