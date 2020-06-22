@@ -23,6 +23,17 @@ def coding_problem_30(arr):
     Starting from the left and right boundaries, we keep track of the highest value found so far.
     We respectively advance or retreat either end until they collide. We always move the lowest.
     Water gets trapped at a index if its value is lower than both the current left and right maximums.
+    The code is equivalent to the following, but more efficient since it required no copies and a single pass:
+
+        def monotonically_increasing(a):
+            filled = a[:]
+            for index in range(1, len(a)):
+                filled[index] = max(filled[index], filled[index - 1])
+            return filled
+
+        from_left = monotonically_increasing(arr)
+        from_right = monotonically_increasing(arr[::-1])[::-1]
+        water = sum(min(l, r) - a for a, l, r in zip(arr, from_left, from_right))
     """
     if len(arr) <= 2:
         return 0
